@@ -1,11 +1,12 @@
-name: ZAVI ONE Windows x64 Setup — V65.55 desktop visibility hotfix
+name: ZAVI ONE Windows 65.56 with browser UI smoke QA
 on:
   push:
-    branches: [zavi-windows-v6555-visible-content-fix]
+    branches: [zavi-windows-v6556-verified-ui-smoke]
     paths:
       - ".github/workflows/zavi-windows-v6554-exact.yml"
       - "windows-build/desktop-visible-v6555.css"
       - "windows-build/desktop-visible-v6555.js"
+      - "windows-build/windows-ui-smoke-v6556.cjs"
       - "windows-build/main.cjs"
   workflow_dispatch:
 permissions:
@@ -66,8 +67,9 @@ jobs:
         run: |
           Copy-Item windows-build/main.cjs windows-output/ZAVI_ONE/main.cjs
           Copy-Item windows-build/desktop-server.cjs windows-output/ZAVI_ONE/desktop-server.cjs
+          Copy-Item windows-build/windows-ui-smoke-v6556.cjs windows-output/ZAVI_ONE/windows-ui-smoke-v6556.cjs
           $pkg=@{
-            name="zavi-one-desktop";productName="ZAVI ONE";version="65.55.0";private=$true
+            name="zavi-one-desktop";productName="ZAVI ONE";version="65.56.0";private=$true
             description="ZAVI ONE V65.55 Windows x64 desktop content and sync clarity hotfix"
             main="main.cjs"
             scripts=@{test="node --check main.cjs && node --check desktop-server.cjs"; "dist:win"="electron-builder --win nsis --x64"}
@@ -81,7 +83,7 @@ jobs:
                 oneClick=$false;perMachine=$false;allowToChangeInstallationDirectory=$true
                 createDesktopShortcut=$true;createStartMenuShortcut=$true
                 shortcutName="ZAVI ONE";deleteAppDataOnUninstall=$false
-                artifactName="Setup_ZAVI_ONE_65_55_DESKTOP_FIX_Windows_x64.exe"
+                artifactName="Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe"
               }
             }
           }
@@ -96,25 +98,28 @@ jobs:
         run: |
           npm install --no-audit --no-fund
           npm test
+          npm install --no-save --no-audit --no-fund playwright-core@1.58.2
+          node windows-ui-smoke-v6556.cjs
+          if ($LASTEXITCODE -ne 0) { throw 'Real Windows browser UI smoke failed; installer will not be released' }
           npm run dist:win
       - name: Verify real NSIS setup and checksums
         shell: pwsh
         run: |
-          $exe="windows-output/ZAVI_ONE/dist/Setup_ZAVI_ONE_65_55_DESKTOP_FIX_Windows_x64.exe"
+          $exe="windows-output/ZAVI_ONE/dist/Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe"
           if (!(Test-Path $exe)) { throw "No setup exe" }
           $size=(Get-Item $exe).Length
           if ($size -lt 30000000) {throw "Unusually small Electron setup, size $size"}
           $hash=(Get-FileHash $exe -Algorithm SHA256).Hash.ToLowerInvariant()
-          "$hash  Setup_ZAVI_ONE_65_55_DESKTOP_FIX_Windows_x64.exe" | Set-Content windows-output/ZAVI_ONE/dist/Setup_ZAVI_ONE_65_55_DESKTOP_FIX_Windows_x64.exe.sha256 -Encoding ascii
+          "$hash  Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe" | Set-Content windows-output/ZAVI_ONE/dist/Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe.sha256 -Encoding ascii
           Write-Host "PASS: direct NSIS Windows x64 setup, $size bytes, SHA256 $hash"
       - name: Release installer
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: zavi-windows-v6555-desktop-fix-qa
+          TAG: zavi-windows-v6556-browser-verified-qa
         shell: pwsh
         run: |
           gh release view $env:TAG 2>$null
           if ($LASTEXITCODE -ne 0) {
-            gh release create $env:TAG --target "$env:GITHUB_SHA" --prerelease --title "ZAVI ONE 65.55 Windows Desktop Content Fix QA" --notes "Windows V65.55: all prior V65.54 business data code unchanged. Fixes desktop visibility, avoids animation-hidden cards, explains empty fresh local profile, and helps open cloud Settings for user-authorized sync. Existing local data not removed. Unsigned QA, Windows hardware and real-account tests still required."
+            gh release create $env:TAG --target "$env:GITHUB_SHA" --prerelease --title "ZAVI ONE 65.56 Windows — Rendered UI Audit" --notes "Windows V65.56: actual headless Edge tests assert eight rendered business pages from the bundled V65.54 engine before releasing the installer; existing data retained. Fixes desktop visibility, avoids animation-hidden cards, explains empty fresh local profile, and helps open cloud Settings for user-authorized sync. Existing local data not removed. Unsigned QA, Windows hardware and real-account tests still required."
           }
-          gh release upload $env:TAG "windows-output/ZAVI_ONE/dist/Setup_ZAVI_ONE_65_55_DESKTOP_FIX_Windows_x64.exe" "windows-output/ZAVI_ONE/dist/Setup_ZAVI_ONE_65_55_DESKTOP_FIX_Windows_x64.exe.sha256" --clobber
+          gh release upload $env:TAG "windows-output/ZAVI_ONE/dist/Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe" "windows-output/ZAVI_ONE/dist/Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe.sha256" --clobber
