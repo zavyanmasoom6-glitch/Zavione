@@ -1,0 +1,65 @@
+name: Both ZAVI ONE Complete Windows Setup EXEs — one ZIP QA
+on:
+  push:
+    branches: [zavi-admin-electron-146-qa]
+    paths:
+      - ".github/workflows/zavi-windows-both-setups-v6556.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download EXACT verified Win64 setups for both systems
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p installers
+          gh release download zavi-windows-v6556-browser-verified-qa --pattern 'Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe' --dir installers
+          gh release download zavi-admin-electron-v147-verified-qa --pattern 'Setup_ZAVI_ONE_ADMIN_1_4_7_Electron_Windows_x64.exe' --dir installers
+          cd installers
+          echo 'e66870c76dcc7a949d7d27cba0a1238edcfedd3b47599ceacff8a59b6b276766  Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe' | sha256sum -c -
+          echo 'd888d0e94e75ec7bc37146d1f67b2b75d46b9b0a38570e4b3d2ddc2f5a6fa85e  Setup_ZAVI_ONE_ADMIN_1_4_7_Electron_Windows_x64.exe' | sha256sum -c -
+          test "$(stat -c %s Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe)" -gt 90000000
+          test "$(stat -c %s Setup_ZAVI_ONE_ADMIN_1_4_7_Electron_Windows_x64.exe)" -gt 90000000
+          sha256sum Setup_*.exe > SHA256_CHECKSUMS.txt
+          cat > READ_ME_FIRST_DARI.txt <<'README'
+          ZAVI ONE + ZAVI ONE ADMIN - Full Windows 10/11 64-bit Electron Setups
+          2026-10-24 — QA installers. Both EXE files are actually INSIDE this ZIP.
+          1. Extract this ZIP (Extract All).
+          2. Install ZAVI ONE with Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe.
+          3. Install ZAVI ONE ADMIN with Setup_ZAVI_ONE_ADMIN_1_4_7_Electron_Windows_x64.exe.
+          4. Use your own cloud login. The Windows app has its OWN local storage origin;
+             data stored only in another browser/device does not migrate automatically.
+             Allow cloud sync to complete and confirm records and offline permission.
+          5. The central ZAVI ONE ADMIN is ONLY for the main system owner.
+          IMPORTANT: Never uninstall or reset an existing app with unsent offline data.
+          Back up first. Neither installer is currently Authenticode signed.
+          Run a test install and verify products, invoices, customers, renewals,
+          camera, prints and account permissions before public business deployment.
+          Android APKs and web builds are separate releases.
+          README
+          zip -0 -q -r ../ZAVI_ONE_AND_ADMIN_FULL_WINDOWS_SETUPS_QA_2026_10_24.zip Setup_*.exe SHA256_CHECKSUMS.txt READ_ME_FIRST_DARI.txt
+          unzip -t ../ZAVI_ONE_AND_ADMIN_FULL_WINDOWS_SETUPS_QA_2026_10_24.zip | tail -1
+          sha256sum ../ZAVI_ONE_AND_ADMIN_FULL_WINDOWS_SETUPS_QA_2026_10_24.zip > ../ZAVI_ONE_AND_ADMIN_FULL_WINDOWS_SETUPS_QA_2026_10_24.zip.sha256
+          echo "PASS: Both complete independent EXEs inside ZIP, SHA256 verified"
+      - name: Publish bundle for direct GitHub download
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: zavi-one-admin-both-windows-setups-qa-20261024
+        run: |
+          set -euo pipefail
+          if ! gh release view "$TAG" >/dev/null 2>&1;then
+            gh release create "$TAG" --target "$GITHUB_SHA" --prerelease \
+              --title "ZAVI ONE and ADMIN — BOTH Full Windows x64 Setups in One ZIP QA" \
+              --notes "Contains exact validated Electron NSIS ZAVI ONE V65.56 and ZAVI ONE ADMIN V1.4.7 EXE installers, checksum file and Dari guide. 8+11 rendered pages QA passed in Windows Edge. Unsigned QA: real cloud accounts, offline transactions, printing and barcodes need acceptance."
+          fi
+          gh release upload "$TAG" \
+            ZAVI_ONE_AND_ADMIN_FULL_WINDOWS_SETUPS_QA_2026_10_24.zip \
+            ZAVI_ONE_AND_ADMIN_FULL_WINDOWS_SETUPS_QA_2026_10_24.zip.sha256 --clobber
