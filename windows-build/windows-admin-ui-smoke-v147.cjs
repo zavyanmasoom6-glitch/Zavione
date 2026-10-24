@@ -15,8 +15,11 @@ const path=require('path'),fs=require('fs'),assert=require('node:assert/strict')
   await page.waitForTimeout(1200);
   assert.equal(await page.locator('#appScreen').isVisible(),true,'Admin app screen was not rendered');
   for(const route of ['overview','customers','payments','finance','brand','devices','support','activity','health','security','settings']){
+   const nav=page.locator('.nav-item[data-page="'+route+'"]').first();
+   assert.ok(await nav.count()>0,'ADMIN navigation missing: '+route);
+   await nav.click();
+   await page.waitForTimeout(220);
    const data=await page.evaluate(target=>{
-    page=target;render();
     const root=document.querySelector('#view'),txt=root?.innerText||'',first=root?.querySelector('.panel,section,.page-head,header');
     const css=first?getComputedStyle(first):null;
     return {route:target,length:txt.trim().length,count:root?.children.length||0,visible:!!css&&css.display!=='none'&&css.visibility!=='hidden'&&Number(css.opacity)>.04,html:root?.innerHTML.length||0,leak:/function\s+renderUSDOverview|db\.tx\.filter\(|const\s+ICON\s*=\s*\{/.test(txt)};
@@ -24,7 +27,7 @@ const path=require('path'),fs=require('fs'),assert=require('node:assert/strict')
    assert.ok(data.length>75&&data.count>0&&data.visible&&!data.leak,'Admin page is blank or hidden: '+JSON.stringify(data));
    console.log('ADMIN PASS '+JSON.stringify(data));
   }
-  await page.evaluate(()=>{page='customers';render()});
+  await page.locator('.nav-item[data-page="customers"]').first().click();
   const action=page.locator('#view button:has-text("تمدید")').first();
   console.log('PASS demo mode and protected rendering, all 11 sections, request errors:',errors.length);
   if(errors.length)throw Error(errors.slice(0,5).join(' | '));
