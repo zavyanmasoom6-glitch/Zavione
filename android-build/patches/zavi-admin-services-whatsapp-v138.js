@@ -17,6 +17,9 @@
  function normalized(x){return String(x||'').toLowerCase().trim()}
  function render(){
   var container=$('#zaviServiceCenter #zaviAdminWhatsAppV138');if(!container)return;
+  var key=[loaded,loading,hasError,term,contacts.length,tr().head,contacts.map(x=>x.whatsapp_e164).join(',')].join('|');
+  if(container.dataset.renderKey===key)return;
+  container.dataset.renderKey=key;
   var t=tr();container.querySelector('h2').textContent=t.head;
   container.querySelector('.zawi-desc').textContent=t.info;
   var inp=container.querySelector('input');if(inp && document.activeElement!==inp)inp.value=term;
