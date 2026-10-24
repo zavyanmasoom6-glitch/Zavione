@@ -1,0 +1,11 @@
+/* Admin Electron desktop support: no global hide/show overrides */
+html.zavi-admin-desktop #appScreen:not([hidden]){min-height:100vh}
+html.zavi-admin-desktop #view{min-width:0;overflow:visible}
+html.zavi-admin-desktop #view > :is(section,article,.panel,.admin-kpis,.admin-secondary){opacity:1!important;visibility:visible!important;animation:none!important}
+html.zavi-admin-desktop #view :is(.table-scroll,.table-wrap){max-width:100%;overflow-x:auto}
+html.zavi-admin-desktop .zavi-admin-win-notice{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:#0b3558;border:1px solid #299dcd;border-radius:13px;padding:15px;margin:15px 0 20px;color:white;line-height:1.7}
+html.zavi-admin-desktop .zavi-admin-win-notice span{flex:1 1 230px;font-size:13px}
+html.zavi-admin-desktop .zavi-admin-win-notice button{cursor:pointer;border-radius:9px;border:1px solid #8ac9ee;background:#137bcc;color:white;padding:8px 13px;font:inherit}
+html.zavi-admin-desktop[data-zavi-theme=light] .zavi-admin-win-notice{background:#f0f9ff;color:#163d58}
+@media print{html.zavi-admin-desktop .zavi-admin-win-notice{display:none!important}}
+@media(prefers-reduced-motion:reduce){html.zavi-admin-desktop *{animation-duration:0ms!important;transition-duration:0ms!important}}
