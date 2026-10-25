@@ -1,0 +1,55 @@
+name: Bundle verified ZAVI ONE 65.59 and ADMIN 1.4.10 Android QA
+on:
+  push:
+    branches: [zavi-final-settings-ui-20261025]
+    paths: [".github/workflows/zavi-clean-settings-apk-bundle.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - name: Download exact built and signed store and admin APKs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: zavi-clean-settings-final-qa-apks-20261025
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern '*.apk' --dir dist
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern '*.apk.sha256' --dir dist
+          cd dist
+          test "$(find . -maxdepth 1 -name '*.apk' | wc -l)" -eq 2
+          for f in *.apk.sha256;do sed 's#  dist/#  #' "$f" | sha256sum -c -;done
+          test "$(stat -c %s ZAVI_ONE_V65_59_CLEAN_SETTINGS_FINAL_QA.apk)" -gt 3000000
+          test "$(stat -c %s ZAVI_ONE_ADMIN_V1_4_10_CLEAN_SETTINGS_FINAL_QA.apk)" -gt 3000000
+          cat > README_FIRST_DARI.txt <<'README'
+          ZAVI ONE V65.59 + ZAVI ONE ADMIN V1.4.10 — CLEAN SETTINGS QA
+          Each APK in this archive contains its full original shop / central-admin web logic,
+          plus the updated visual interface and searchable categorized settings.
+          The old bulk enable-all shortcut is hidden; no accounting feature, subscription,
+          server permissions or customer records were intentionally deleted.
+          The admin central console still needs owner-only server authorization.
+          Installation: two QA applications have different package IDs and install beside the
+          original apps. Their local data is separate; DO NOT remove or clear existing apps
+          until all unsynced offline sales/purchases have been safely backed up and sent.
+          These APKs use Android QA signing, NOT persistent commercial app-signing keys.
+          Factory and physical-device tests, real cloud sign-in, barcode scanning, offline
+          transfer and every business workflow are not certified by static build checks.
+          Use test accounts/device first, confirm backup and real data before migrating.
+          README
+          zip -0 -q ZAVI_ONE_AND_ADMIN_V65_59_V1_4_10_CLEAN_SETTINGS_QA.zip *.apk *.sha256 README_FIRST_DARI.txt
+          unzip -t ZAVI_ONE_AND_ADMIN_V65_59_V1_4_10_CLEAN_SETTINGS_QA.zip | tail -1
+          sha256sum ZAVI_ONE_AND_ADMIN_V65_59_V1_4_10_CLEAN_SETTINGS_QA.zip > ZAVI_ONE_AND_ADMIN_V65_59_V1_4_10_CLEAN_SETTINGS_QA.zip.sha256
+          echo "PASS: complete two verified APK ZIP package"
+      - name: Upload complete archive direct to the same GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: zavi-clean-settings-final-qa-apks-20261025
+        run: |
+          set -euo pipefail
+          gh release upload "$TAG" dist/ZAVI_ONE_AND_ADMIN_V65_59_V1_4_10_CLEAN_SETTINGS_QA.zip dist/ZAVI_ONE_AND_ADMIN_V65_59_V1_4_10_CLEAN_SETTINGS_QA.zip.sha256 --repo "$GITHUB_REPOSITORY" --clobber
