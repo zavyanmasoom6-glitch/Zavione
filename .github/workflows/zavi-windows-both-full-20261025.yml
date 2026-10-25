@@ -1,0 +1,74 @@
+name: ZAVI ONE AND ADMIN Full Windows Setup 2026-10-25
+on:
+  push:
+    branches: [zavi-windows-both-full-20261025]
+    paths:
+      - ".github/workflows/zavi-windows-both-full-20261025.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  package_exact_verified_setups:
+    name: Bundle newest verified Windows installers
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and verify both independently-built Electron installers
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p installers
+          gh release download zavi-windows-v6556-browser-verified-qa --pattern 'Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe' --dir installers
+          gh release download zavi-admin-windows-v147-full-electron-qa --pattern 'Setup_ZAVI_ONE_ADMIN_1_4_7_FULL_ELECTRON_Windows_x64.exe' --dir installers
+          cd installers
+          echo 'e66870c76dcc7a949d7d27cba0a1238edcfedd3b47599ceacff8a59b6b276766  Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe' | sha256sum -c -
+          echo 'e80ee5b372b65ea4eda61cd95edecc921210712090494611ae857c540a6845be  Setup_ZAVI_ONE_ADMIN_1_4_7_FULL_ELECTRON_Windows_x64.exe' | sha256sum -c -
+          test "$(stat -c %s Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe)" -eq 101911723
+          test "$(stat -c %s Setup_ZAVI_ONE_ADMIN_1_4_7_FULL_ELECTRON_Windows_x64.exe)" -eq 102026028
+          test "$(head -c 2 Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe)" = "MZ"
+          test "$(head -c 2 Setup_ZAVI_ONE_ADMIN_1_4_7_FULL_ELECTRON_Windows_x64.exe)" = "MZ"
+          sha256sum Setup_*.exe > SHA256_CHECKSUMS.txt
+          cat > READ_ME_FIRST_DARI.txt <<'README'
+          ZAVI ONE + ZAVI ONE ADMIN — Windows 10/11 x64 complete standalone setup
+          Release package: 2026-10-25
+          ZAVI ONE customer/shop: V65.56, Electron NSIS, 101911723 bytes
+          ZAVI ONE ADMIN owner-only: V1.4.7 newest complete Electron NSIS, 102026028 bytes
+
+          نصب:
+          1. فایل ZIP را Extract All کنید؛ هر دو فایل Setup EXE در داخل ZIP هستند.
+          2. اگر معامله آفلاین ارسال‌نشده دارید، اول از اطلاعات پشتیبان بگیرید.
+          3. نسخه قدیمیِ دارای اطلاعات را قبل از اطمینان از انتقال داده حذف نکنید.
+          4. برای فروشگاه Setup_ZAVI_ONE_65_56_WINDOWS_QA_x64.exe را نصب کنید.
+          5. برای مدیریت مرکزی Setup_ZAVI_ONE_ADMIN_1_4_7_FULL_ELECTRON_Windows_x64.exe را نصب کنید.
+          6. با حساب اصلی ابری وارد شوید، همگام‌سازی را کامل کنید و تعداد مشتریان،
+             کالاها، فاکتورها و مجوز آفلاین را بررسی کنید.
+          7. پنل ZAVI ONE ADMIN فقط مخصوص مالک مرکزی است. حساب فروشگاه یا همکار
+             نباید دسترسی داشته باشد؛ مجوزهای سمت سرور باید آزمون شوند.
+          8. قبل از استفاده عملی روی کامپیوتر خودتان فروش، خرید، بارکد دوربین،
+             چاپگر، آفلاین، تمدید و امنیت نقش‌ها را امتحان کنید.
+          9. فایل‌های EXE امضای Authenticode عمومی ندارند؛ Windows SmartScreen
+             ممکن است هشدار دهد. فقط از مخزن خصوصی معتبر دریافت کنید.
+
+          این بسته دو Setup کامل را دارد؛ خودش به اطلاعات قدیمیِ ذخیره‌شده تنها
+          در مرورگر یا یک دستگاه دیگر به‌صورت خودکار دسترسی ندارد.
+          No customer data were changed or erased while making this bundle.
+          README
+          zip -0 -q -r ../ZAVI_ONE_V65_56_ADMIN_V1_4_7_FULL_WINDOWS_2026_10_25.zip Setup_*.exe SHA256_CHECKSUMS.txt READ_ME_FIRST_DARI.txt
+          unzip -t ../ZAVI_ONE_V65_56_ADMIN_V1_4_7_FULL_WINDOWS_2026_10_25.zip | tail -n 1
+          test "$(unzip -Z1 ../ZAVI_ONE_V65_56_ADMIN_V1_4_7_FULL_WINDOWS_2026_10_25.zip | grep -c '^Setup_.*\.exe$')" -eq 2
+          sha256sum ../ZAVI_ONE_V65_56_ADMIN_V1_4_7_FULL_WINDOWS_2026_10_25.zip > ../ZAVI_ONE_V65_56_ADMIN_V1_4_7_FULL_WINDOWS_2026_10_25.zip.sha256
+          echo "PASS: both latest standalone Electron EXEs present, SHA256, MZ and bytes verified"
+      - name: Publish new ZIP of latest installers
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: zavi-windows-v6556-admin-v147-full-bundle-20261025
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" --target "$GITHUB_SHA" --prerelease               --title "ZAVI ONE 65.56 + ADMIN 1.4.7 — latest full Windows setups (25 Oct)"               --notes "Complete ZIP with two original verified 64-bit Electron/NSIS Windows installers, latest ADMIN rebuilt 2026-10-25, checksums and Dari install guide. Archive integrity checked. Windows hardware, real-account sync, physical printers/cameras, actual offline transactions and Authenticode signing still require acceptance QA."
+          fi
+          gh release upload "$TAG"             ZAVI_ONE_V65_56_ADMIN_V1_4_7_FULL_WINDOWS_2026_10_25.zip             ZAVI_ONE_V65_56_ADMIN_V1_4_7_FULL_WINDOWS_2026_10_25.zip.sha256 --clobber
