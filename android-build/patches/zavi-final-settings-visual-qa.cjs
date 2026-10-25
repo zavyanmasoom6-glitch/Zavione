@@ -36,7 +36,7 @@ async function verify(){
    await input.fill("");
    const target=test.name==="STORE"?"#original-field-0":"#original-field-0";
    const details=page.locator(target).locator("xpath=ancestor::details");
-   if(!(await details.getAttribute("open")))await details.locator("summary").click();
+   if((await details.getAttribute("open"))===null)await details.locator("summary").click();
    await page.locator(target).fill("test-value");
    assert.equal(await page.locator(target).inputValue(),"test-value","Original input stays interactive");
    await page.locator("#"+test.selector).selectOption("en");
