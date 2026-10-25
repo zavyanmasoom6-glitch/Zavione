@@ -12,7 +12,7 @@ if(/آغاز دوباره|پاک.کردن|حذف همه|reset|danger|ریست/i.
 if(/سلامت|بررسی|آزمایش|integrity|testing/i.test(s))return 'advanced';
 if(/فونت|ظاهر|زبان|شخصی|انیمیشن|theme|appearance|language|font|رنګ|ژبه/i.test(s))return 'look';
 if(/فاکتور|چاپ|رسید|invoice|print|چاپول/i.test(s))return 'invoice';
-if(/امکانات|نوع تجارت|بخش|صنف|business|feature|tools|وسیلو/i.test(s))return 'features';
+if(/امکانات|نوع تجارت|مدیریت عمومی|بخش|صنف|business|feature|tools|وسیلو/i.test(s))return 'features';
 if(/پشتیبان|بازیابی|امنیت|قفل|رمز|ابری|sync|backup|security|cloud|بیک اپ/i.test(s))return 'cloud';
 return 'store';
 }
