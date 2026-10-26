@@ -197,3 +197,5 @@ html body #appScreen #view .z424-size-card .z424-limits{
   zoom:1!important;transform:none!important;
   max-width:calc(100vw - 12px)!important;
 }
+
+/* QA invariant: root width always remains 100% of the real device viewport; preserve full scroll and all navigation entries at 50/75/100/125/150. */
