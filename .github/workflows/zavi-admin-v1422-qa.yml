@@ -69,7 +69,7 @@ jobs:
           assert "fa-AF-u-ca-persian" in (a/"zavi-admin-v1421-compact.js").read_text()
           assert "en-GB-u-ca-gregory" in (a/"zavi-admin-v1421-compact.js").read_text()
           assert 'z421-trial-entry' in (a/'zavi-admin-v1421-compact.js').read_text()
-          assert 'getMode' in j and "'live'" in j
+          assert 'getMode' in (a/'zavi-admin-v1421-compact.js').read_text() and "'live'" in (a/'zavi-admin-v1421-compact.js').read_text()
           print('PASS: full ADMIN security preserved, 7d RPC, 2 calendars, compact design')
           PY
       - name: Set isolated signed QA identity (do not overwrite customer's admin)
