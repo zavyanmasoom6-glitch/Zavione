@@ -29,17 +29,7 @@
  ];
  const mobile=()=>window.matchMedia?.('(max-width:800px)').matches===true;
  let lastLocale='',scheduled=false,lastStamp='';
- function guardScale(){
-  if(!mobile())return;
-  try{if(localStorage.getItem(key)!=='100')localStorage.setItem(key,'100')}catch(_){}
-  const root=document.documentElement;
-  if(root.style.zoom!=='1')root.style.zoom='1';
-  root.dataset.zaviAdminSize='100';
-  root.style.setProperty('--zavi-admin-reciprocal-scale','1');
-  const output=q('#zavi140Size');
-  if(output){const slider=q('#zavi140Range',output);if(slider&&slider.value!=='100')slider.value='100';
-   const val=q('#zavi140Output',output);if(val&&val.textContent!=='100%')val.textContent='100%'}
- }
+ function guardScale(){/* v1.4.24 uses an accessible 50–150% device-aware size control instead of forcing 100%. */}
  function currentLanguage(){
   const l=locale();
   if(l!==lastLocale){
@@ -125,13 +115,6 @@
    if(e.target.closest('#appScreen .workspace')&&!e.target.closest('#mobileMenu'))closeDrawer();
   },true);
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
-  document.addEventListener('input',e=>{
-   if(!mobile()||e.target?.id!=='zavi140Range')return;
-   // The older 50% zoom control causes broken mobile geometry. Force 100% on small screens.
-   e.stopImmediatePropagation();
-   e.target.value='100';
-   guardScale();
-  },true);
   q('#zaviAdminLanguage')?.addEventListener('change',()=>{
    lastLocale='';
    requestAnimationFrame(()=>{guardScale();sync();window.ZaviLocaleV22?.refresh?.()});
