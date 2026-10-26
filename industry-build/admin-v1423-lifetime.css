@@ -1,0 +1,33 @@
+/* ZAVI ONE ADMIN 1.4.23 — focused permanent subscriptions console */
+#appScreen .sidebar .nav .z423-launch{display:flex!important;justify-content:flex-start!important;align-items:center!important;min-height:44px!important;max-width:100%!important;width:100%!important;box-sizing:border-box!important;padding:9px 12px!important;font-size:13px!important;line-height:1.5!important;text-align:start!important;white-space:normal!important;font-weight:800!important;color:inherit!important;background:rgba(20,109,193,.09)!important;border:1px solid rgba(42,125,210,.22)!important;border-radius:11px!important;margin:3px 0!important}
+#appScreen .z423-inline{display:inline-flex!important;align-items:center!important;min-height:42px!important;font-size:12px!important;padding:8px 13px!important;margin:0 0 10px!important;border-radius:10px!important;border:0!important;background:linear-gradient(110deg,#155fcb,#169ac3)!important;color:white!important;-webkit-text-fill-color:white!important;font-weight:850!important}
+.z423-overlay{position:fixed;inset:0;z-index:214000;display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box;background:rgba(2,15,38,.75);overflow-y:auto;direction:rtl}
+.z423-modal{width:min(100%,550px);max-height:94dvh;overflow:auto;margin:auto;padding:15px;box-sizing:border-box;background:#fff;color:#19354c;border:1px solid #a7c5d9;border-radius:15px;font:13px/1.65 Tahoma,system-ui,sans-serif;box-shadow:0 20px 70px #001a38aa}
+.z423-modal *{box-sizing:border-box;max-width:100%}
+.z423-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:8px;border-bottom:1px solid #d7e6ee}
+.z423-head h2{font-size:17px;color:#173955;font-weight:900;line-height:1.45;margin:0}
+.z423-close{min-width:36px;min-height:36px;font-size:20px;border:1px solid #aecbdc;background:#f0f8fc;color:#173955;border-radius:9px}
+.z423-intro{font-size:12px;color:#456276;margin:9px 0 6px}
+.z423-field{display:flex;flex-direction:column;gap:4px;margin:9px 0;min-width:0;color:#294b65;font-size:11.5px;font-weight:850}
+.z423-field :is(input,select){height:42px;min-height:42px;width:100%;min-width:0;max-width:100%;font-size:13px;font-weight:700;color:#1e3a53;background:#fff;border:1px solid #b4cfdf;border-radius:10px;padding:8px 10px}
+.z423-field input:focus,.z423-field select:focus{outline:3px solid rgba(20,112,206,.16);border-color:#1975be}
+.z423-status{margin:8px 0!important;padding:8px 11px;border-radius:9px;background:#edf6ff;color:#1d537e;font-size:12px;font-weight:750}
+.z423-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:9px 0}
+.z423-tab{display:flex;align-items:center;justify-content:center;min-height:42px;border:1px solid #a8c5db;border-radius:10px;padding:7px;font-size:11.5px;font-weight:750;background:#f3f7fb;color:#1e4867;line-height:1.45;white-space:normal}
+.z423-tab.active{background:linear-gradient(110deg,#1763ce,#1197b7);color:#fff;border-color:#257fc2;-webkit-text-fill-color:#fff}
+.z423-fields{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.z423-tip{font-size:10.5px;color:#496e85;line-height:1.5}
+.z423-help{font-size:10.8px;color:#496679;line-height:1.7;margin:9px 0}
+.z423-message{font-size:12px;font-weight:750;line-height:1.7;min-height:18px;overflow-wrap:anywhere;margin:7px 0}
+.z423-actions{display:flex;justify-content:flex-end}
+.z423-submit{border:0;border-radius:11px;min-height:45px;padding:9px 17px;font-weight:850;font-size:13px;color:#fff;background:linear-gradient(112deg,#155cce,#08a8bf)}
+.z423-submit.danger{background:linear-gradient(112deg,#ac2e46,#db5446)}
+.z423-submit:disabled{background:#dde5ed;color:#45647a;-webkit-text-fill-color:#45647a;opacity:1}
+html[data-zavi-theme="dark"] .z423-modal,body[data-theme="dark"] .z423-modal{background:#16314b;color:#f5fbff;border-color:#446988}
+html[data-zavi-theme="dark"] .z423-head h2,body[data-theme="dark"] .z423-head h2{color:#fff}
+html[data-zavi-theme="dark"] .z423-intro,html[data-zavi-theme="dark"] .z423-field,html[data-zavi-theme="dark"] .z423-help,html[data-zavi-theme="dark"] .z423-tip{color:#deecf7}
+html[data-zavi-theme="dark"] .z423-field :is(input,select){color:#f5fbff;background:#22435c;border-color:#53758c}
+html[data-zavi-theme="dark"] .z423-status{background:#234662;color:#e5f6ff}
+html[data-zavi-theme="dark"] .z423-tab{background:#23425d;color:#f5fbff;border-color:#557a97}
+html[data-zavi-theme="dark"] .z423-tab.active{background:#165bbd}
+@media(max-width:470px){.z423-overlay{padding:8px}.z423-modal{max-height:89dvh;padding:11px;border-radius:12px}.z423-head h2{font-size:15px}.z423-tabs{gap:4px}.z423-tab{font-size:10.8px;padding:6px}.z423-field{margin:7px 0}}
