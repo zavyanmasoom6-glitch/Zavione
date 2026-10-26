@@ -7,18 +7,25 @@ const lang=()=>{let v=(q('#zaviAdminLanguage')?.value||document.documentElement.
 const store='zavi_admin_ui_scale_v140';
 function setting(){try{const raw=parseInt(localStorage.getItem(store)||'100',10);return Math.max(50,Math.min(150,Math.round((raw||100)/5)*5))}catch(_){return 100}}
 function zoomUI(amount){
- const v=Math.min(150,Math.max(50,Math.round(Number(amount)/5)*5));
+ const raw=Number(amount);
+ const v=Math.min(150,Math.max(50,Number.isFinite(raw)?Math.round(raw/5)*5:100));
  const root=q('#appScreen');if(!root)return;
- root.style.setProperty('zoom',String(v/100),'important');
- root.style.setProperty('width',(100/(v/100))+'%','important');
- root.style.setProperty('max-width','none','important');
- root.style.setProperty('min-width','0','important');
+ /* NEVER scale/zoom the application wrapper. At non-100% zoom it changes the
+  * layout viewport, clips fixed headers and cuts the contents in half on phones.
+  * Instead scale only text, cards and controls via inherited CSS variables. */
+ for(const prop of ['zoom','width','max-width','min-width','transform','transform-origin'])root.style.removeProperty(prop);
+ root.style.setProperty('--z425-ui-scale',String(v/100));
+ root.style.setProperty('--z425-ui-size',String(v));
  root.dataset.z424Scale=String(v);
- document.documentElement.style.setProperty('zoom','1','important'); // Never zoom the entire browser viewport or OS picker.
+ root.dataset.z425Enlarged=v>=125?'true':'false';
+ document.documentElement.style.removeProperty('zoom');
  try{localStorage.setItem(store,String(v))}catch(_){}
- const value=q('#z424-scale-value');if(value)value.textContent=v+'%';
- const range=q('#z424-scale-range');if(range&&Number(range.value)!==v)range.value=String(v);
+ const value=q('#z424-scale-value');
+ if(value&&value.textContent!==v+'%')value.textContent=v+'%';
+ const range=q('#z424-scale-range');
+ if(range&&Number(range.value)!==v)range.value=String(v);
 }
+
 const labels={
  fa:{header:'اندازه نمایش',caption:'از ۵۰٪ تا ۱۵۰٪، بدون حذف هیچ بخش یا امکاناتی',normal:'بازگشت به ۱۰۰٪',options:'زبان برنامه',dari:'دری',pashto:'پشتو',english:'English'},
  en:{header:'Display size',caption:'50% to 150%; all features remain accessible',normal:'Reset to 100%',options:'App language',dari:'Dari',pashto:'Pashto',english:'English'},
