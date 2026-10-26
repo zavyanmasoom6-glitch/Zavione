@@ -1,0 +1,134 @@
+/* V1.4.26: FIX for stubborn white sidebar after V1.4.25 safe-scale.
+ * V1.4.25 transform:none !important cancelled the off-screen mobile translateX. */
+#z426-drawer-backdrop{display:none;position:fixed;inset:0;z-index:1240;background:rgba(5,16,37,.53);pointer-events:none;touch-action:manipulation;opacity:0}
+#z426-drawer-backdrop.z426-visible{display:block;opacity:1;pointer-events:auto}
+#appScreen .sidebar .z426-close{display:none!important}
+@media(max-width:800px){
+ html body #appScreen .sidebar{
+   box-sizing:border-box!important;
+   position:fixed!important;
+   top:0!important;
+   bottom:auto!important;
+   right:0!important;
+   left:auto!important;
+   width:min(304px,83vw)!important;
+   max-width:83vw!important;
+   height:100dvh!important;
+   min-height:0!important;
+   max-height:100dvh!important;
+   z-index:1250!important;
+   margin:0!important;
+   transform:translate3d(105%,0,0)!important;
+   transform-origin:initial!important;
+   transition:transform .19s ease!important;
+   will-change:transform!important;
+   overflow-x:hidden!important;
+   overflow-y:auto!important;
+   overscroll-behavior:contain!important;
+   visibility:hidden!important;
+   pointer-events:none!important;
+   padding:52px 11px max(14px,env(safe-area-inset-bottom))!important;
+ }
+ html body.mobile-drawer #appScreen .sidebar,
+ html body #appScreen .sidebar.z426-is-open{
+   transform:translate3d(0,0,0)!important;
+   visibility:visible!important;
+   pointer-events:auto!important;
+ }
+ html body #appScreen .sidebar.z426-is-closed{
+   transform:translate3d(105%,0,0)!important;
+   visibility:hidden!important;
+   pointer-events:none!important;
+ }
+ html[data-zavi-lang="en"] body #appScreen .sidebar,
+ html[lang^="en"] body #appScreen .sidebar{
+   left:0!important;
+   right:auto!important;
+   transform:translate3d(-105%,0,0)!important;
+ }
+ html[data-zavi-lang="en"] body.mobile-drawer #appScreen .sidebar,
+ html[lang^="en"] body.mobile-drawer #appScreen .sidebar,
+ html[data-zavi-lang="en"] body #appScreen .sidebar.z426-is-open,
+ html[lang^="en"] body #appScreen .sidebar.z426-is-open{
+   transform:translate3d(0,0,0)!important;
+   visibility:visible!important;
+   pointer-events:auto!important;
+ }
+ html[data-zavi-lang="en"] body #appScreen .sidebar.z426-is-closed,
+ html[lang^="en"] body #appScreen .sidebar.z426-is-closed{
+   transform:translate3d(-105%,0,0)!important;
+   visibility:hidden!important;
+   pointer-events:none!important;
+ }
+ html body.mobile-drawer #appScreen .workspace:before{display:none!important;content:none!important}
+ html body #appScreen .sidebar .z426-close{
+   display:inline-flex!important;
+   position:absolute!important;
+   top:8px!important;
+   left:10px!important;
+   right:auto!important;
+   z-index:1270!important;
+   min-width:95px!important;
+   max-width:144px!important;
+   min-height:35px!important;
+   padding:5px 11px!important;
+   margin:0!important;
+   align-items:center!important;
+   justify-content:center!important;
+   gap:5px!important;
+   border-radius:10px!important;
+   border:1px solid #afcae0!important;
+   background:#eaf5ff!important;
+   color:#174b73!important;
+   -webkit-text-fill-color:#174b73!important;
+   font:850 12px/1.3 Tahoma,system-ui,sans-serif!important;
+   white-space:nowrap!important;
+   cursor:pointer!important;
+   touch-action:manipulation!important;
+ }
+ html[data-zavi-lang="en"] body #appScreen .sidebar .z426-close,
+ html[lang^="en"] body #appScreen .sidebar .z426-close{
+   right:10px!important;left:auto!important;
+ }
+ html[data-zavi-theme="dark"] body #appScreen .sidebar .z426-close{
+   background:#1d4160!important;
+   color:#fff!important;
+   -webkit-text-fill-color:#fff!important;
+   border-color:#4f83a6!important;
+ }
+ html body #appScreen .sidebar .z426-close:focus-visible{
+   outline:3px solid #2f9bd7!important;
+   outline-offset:2px!important;
+ }
+ html body #appScreen .sidebar .brand{
+   max-width:100%!important;
+   min-width:0!important;
+   margin-bottom:10px!important;
+ }
+ html body #appScreen .sidebar .zavi-v6-menu-scroll{
+   overflow-y:auto!important;overflow-x:hidden!important;
+   max-height:calc(100dvh - 225px)!important;
+   overscroll-behavior:contain!important;
+ }
+ html body #appScreen .sidebar .nav-item{
+   pointer-events:auto!important;
+ }
+ html body #appScreen .mobile-menu,
+ html body #appScreen #mobileMenu{
+   cursor:pointer!important;
+   pointer-events:auto!important;
+   touch-action:manipulation!important;
+ }
+}
+@media(min-width:801px){
+ #z426-drawer-backdrop{display:none!important}
+ html body #appScreen .sidebar{
+   transform:none!important;
+   visibility:visible!important;
+   pointer-events:auto!important;
+   position:relative!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ html body #appScreen .sidebar{transition:none!important}
+}
