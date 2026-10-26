@@ -18,7 +18,8 @@ const fmt=(value)=>{
  if(!value)return null;
  const d=new Date(value);if(!Number.isFinite(d.getTime()))return null;
  const opt={timeZone:'Asia/Kabul',day:'numeric',month:'long',year:'numeric'};
- return {solar:new Intl.DateTimeFormat('fa-AF-u-ca-persian',opt).format(d),western:new Intl.DateTimeFormat('en-GB-u-ca-gregory',opt).format(d),iso:d.toISOString()};
+ const cal=lang()==='en'?'en-u-ca-persian':lang()==='ps'?'ps-AF-u-ca-persian':'fa-AF-u-ca-persian';
+ return {solar:new Intl.DateTimeFormat(cal,opt).format(d),western:new Intl.DateTimeFormat('en-GB-u-ca-gregory',opt).format(d),iso:d.toISOString()};
 };
 const formatted=(date)=>{
  const d=fmt(date);if(!d)return t().unknown;
