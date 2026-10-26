@@ -98,6 +98,44 @@ function langUI(){
  button.textContent=sel.value==='en'?'English':sel.value==='ps-AF'?'پښتو':'دری';
  button.setAttribute('aria-label',tr.options);
 }
+let toolMenu=null;
+function closeTools(){toolMenu?.remove();toolMenu=null;q('#z424-tools')?.setAttribute('aria-expanded','false')}
+function topTools(){
+ const row=q('#appScreen .topbar .top-right');if(!row)return;
+ let btn=q('#z424-tools');
+ if(!btn){
+  btn=$('button','z424-tools','⋯');btn.id='z424-tools';btn.type='button';
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-haspopup','menu');
+  row.append(btn);
+  btn.addEventListener('click',()=>{
+   if(toolMenu){closeTools();return}
+   const l=lang();
+   const words=l==='en'?['Refresh','Light / dark theme','Industry editions','7-day trial','Close']:
+    l==='ps'?['نوی کول','روښانه / تياره','د سوداګرۍ بڼې','۷ ورځنی ازموينه','بندول']:
+    ['تازه‌سازی','حالت روشن / تاریک','نسخه‌های تخصصی','تمدید آزمایشی ۷روزه','بستن'];
+   toolMenu=$('div','z424-tools-menu');toolMenu.setAttribute('role','menu');
+   const targets=['#refreshBtn','#z11ThemeToggle','#z73-launch','#z421-trial-entry',null];
+   targets.forEach((selector,i)=>{
+    const item=$('button','z424-tools-entry',words[i]);item.type='button';item.setAttribute('role','menuitem');
+    item.addEventListener('click',()=>{
+     closeTools();
+     if(!selector)return;
+     const target=q(selector);if(target)target.click();
+     else if(i===2)q('.sidebar .nav .z421-nav-entry')?.click();
+    });
+    toolMenu.append(item);
+   });
+   document.body.append(toolMenu);
+   const rect=btn.getBoundingClientRect();
+   toolMenu.style.left=Math.max(8,Math.min(window.innerWidth-202,rect.left-150))+'px';
+   toolMenu.style.top=Math.min(window.innerHeight-240,rect.bottom+5)+'px';
+   btn.setAttribute('aria-expanded','true');
+  });
+  document.addEventListener('click',e=>{if(toolMenu&&!e.target.closest('#z424-tools,#z424-tools-menu'))closeTools()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTools()});
+ }
+ btn.setAttribute('aria-label',lang()==='en'?'More tools':lang()==='ps'?'نور وسایل':'ابزارهای بیشتر');
+}
 function tables(){
  const view=q('#view');if(!view)return;
  for(const table of all('table',view)){
@@ -152,7 +190,7 @@ function run(){
  if(busy)return;
  busy=true;
  try{
-  zoomUI(setting());sizeControl();langUI();tables();translate();
+  zoomUI(setting());sizeControl();langUI();topTools();tables();translate();
   const d=q('#z421-date-info');if(d)d.style.setProperty('max-width','100%','important');
  }finally{busy=false}
 }
@@ -163,7 +201,7 @@ function start(){
  run();
  const view=q('#view');if(view)new MutationObserver(schedule).observe(view,{childList:true,subtree:true});
  q('#zaviAdminLanguage')?.addEventListener('change',()=>{closePopup();schedule()});
- window.addEventListener('resize',()=>{closePopup();schedule()});
+ window.addEventListener('resize',()=>{closePopup();closeTools();schedule()});
  document.addEventListener('click',e=>{if(e.target.closest('.nav-item'))schedule()},true);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
