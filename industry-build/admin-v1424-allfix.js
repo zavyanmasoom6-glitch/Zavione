@@ -47,10 +47,11 @@ function sizeControl(){
   card.append(head,hint,range,limits,normal);
   view.prepend(card);
  }
- q('#z424-size-title').textContent=tr.header;
- q('#z424-size-caption').textContent=tr.caption;
- q('#z424-size-reset').textContent=tr.normal;
- q('#z424-scale-value').textContent=setting()+'%';
+ const set=(selector,text)=>{const n=q(selector);if(n&&n.textContent!==text)n.textContent=text};
+ set('#z424-size-title',tr.header);
+ set('#z424-size-caption',tr.caption);
+ set('#z424-size-reset',tr.normal);
+ set('#z424-scale-value',setting()+'%');
 }
 let popup=null;
 function closePopup(){popup?.remove();popup=null;q('#z424-lang-button')?.setAttribute('aria-expanded','false')}
