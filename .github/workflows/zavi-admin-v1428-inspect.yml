@@ -1,0 +1,22 @@
+name: Inspect ADMIN authenticated API for offline lease
+on:
+  push:
+    branches: [zavi-admin-v1428-offline-seven-days-qa]
+    paths: ['.github/workflows/zavi-admin-v1428-inspect.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect offline-safe authenticated API shape
+        run: |
+          set -euo pipefail
+          git fetch --depth=1 origin zavi-admin-v1427-trial7-date-contrast-qa
+          git show FETCH_HEAD:industry-delivery/ZAVI_ONE_ADMIN_V1_4_27_TRIAL7_FIXED_QA.apk > /tmp/admin.apk
+          for path in admin-portal.js account-control.js app.js;do
+            echo "=== $path ==="
+            unzip -p /tmp/admin.apk "assets/$path" 2>/dev/null | grep -n -E 'window.ZaviAdminAPI|async function request|const request|async function login|function login|signIn|getMode\(|getRows\(|getAuth|access_token|supabase\.auth|loadSession|session\(' | head -n 40 | cut -c1-320 || true
+          done
+          echo '=== DONE ==='
