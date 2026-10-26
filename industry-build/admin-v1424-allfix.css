@@ -1,0 +1,81 @@
+/* ZAVI ONE ADMIN 1.4.24 — light theme contrast, small language picker and responsive scaling. */
+html,body{box-sizing:border-box;min-width:0;max-width:100%;overflow-x:clip!important}
+html body #appScreen{box-sizing:border-box!important;min-width:0!important;margin:0!important;transform:none!important;transform-origin:top center!important}
+html body #appScreen .workspace{min-width:0!important;max-width:100%!important;box-sizing:border-box!important;overflow-x:clip!important}
+html body #appScreen #view{max-width:100%!important;min-width:0!important;overflow-x:clip!important;box-sizing:border-box!important}
+html body #appScreen :is(.panel,.card,.settings-card,.store-card,.admin-hero,.admin-kpi-grid){box-sizing:border-box!important;min-width:0!important;max-width:100%!important}
+html body #appScreen .topbar{max-width:100%!important;min-width:0!important;overflow:hidden!important}
+html body #appScreen .topbar .breadcrumbs{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important}
+html body #appScreen .topbar #mobileMenu{flex-shrink:0!important}
+html body #appScreen .topbar .zavi-language-switch{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;min-width:90px!important;max-width:100px!important;width:98px!important;margin:0!important;padding:0!important;overflow:visible!important}
+html body #appScreen .topbar .zavi-language-switch select{position:absolute!important;left:-9999px!important;top:0!important;width:1px!important;min-width:0!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+html body #appScreen .z424-language-button{display:inline-flex!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;width:94px!important;max-width:94px!important;height:39px!important;min-height:39px!important;padding:5px 8px!important;border:1px solid #8eacc9!important;border-radius:10px!important;background:var(--za-panel,#fff)!important;color:var(--za-text,#1c435d)!important;-webkit-text-fill-color:currentColor!important;font:750 12px/1.4 Tahoma,system-ui,sans-serif!important;white-space:nowrap!important;cursor:pointer!important}
+html body #appScreen .z424-language-button:after{content:'⌄';font-weight:900;margin-inline-start:6px;font-size:13px}
+.z424-lang-list{position:fixed;display:flex;flex-direction:column;gap:3px;padding:7px;box-sizing:border-box;z-index:214100;border:1px solid #92b5d2;border-radius:12px;background:#fff;color:#183a57;box-shadow:0 10px 32px #091e3a33;max-height:190px;overflow-y:auto;direction:ltr}
+.z424-lang-option{box-sizing:border-box!important;width:100%;min-height:43px;padding:9px 12px;background:transparent;color:#163c58;-webkit-text-fill-color:#163c58;border:1px solid transparent;border-radius:8px;text-align:start;font:800 13px/1.3 Tahoma,system-ui,sans-serif;white-space:nowrap}
+.z424-lang-option[aria-selected="true"]{background:#e6f3fc;border-color:#9bcbe9;color:#14559a}
+.z424-lang-option:focus-visible{outline:3px solid #318dca}
+html[data-zavi-theme="dark"] .z424-lang-list{background:#15324e;border-color:#487797;color:#f5fbff}
+html[data-zavi-theme="dark"] .z424-lang-option{color:#f3fbff;-webkit-text-fill-color:#f3fbff}
+html[data-zavi-theme="dark"] .z424-lang-option[aria-selected="true"]{background:#285776;color:#fff}
+/* Zoom is applied only to appScreen and compensated by inverse width; no horizontal cutoff. */
+html body #appScreen[data-z424-scale]{overflow-x:clip!important;position:relative!important}
+#appScreen .z424-size-card{box-sizing:border-box!important;display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;margin:0 0 13px!important;padding:13px 15px!important;border:1px solid #aec9df!important;border-radius:13px!important;background:#eff7fd!important;color:#1c405e!important}
+#appScreen .z424-size-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#appScreen .z424-size-title{font-size:15px!important;font-weight:900!important;color:inherit!important;margin:0!important}
+#appScreen .z424-size-current{font-size:13px!important;color:#1759a5!important}
+#appScreen .z424-size-caption{font-size:11px!important;line-height:1.6!important;color:#3b5e79!important;margin:5px 0 11px!important}
+#appScreen #z424-scale-range{display:block!important;width:100%!important;box-sizing:border-box!important;accent-color:#147cca!important;height:33px!important;cursor:pointer!important}
+#appScreen .z424-limits{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:750;color:#3f6481}
+#appScreen .z424-reset{font-size:12px!important;font-weight:800!important;min-height:40px!important;padding:8px 14px!important;border:1px solid #3186c5!important;color:#19568b!important;background:#e2f2ff!important;border-radius:10px!important;margin-top:9px!important}
+html[data-zavi-theme="dark"] #appScreen .z424-size-card{background:#193c58!important;color:#f0f8ff!important;border-color:#48718e!important}
+html[data-zavi-theme="dark"] #appScreen .z424-size-caption{color:#d2e8f8!important}
+html[data-zavi-theme="dark"] #appScreen .z424-size-current{color:#75d4fb!important}
+/* Prevent any other zoom slider from colliding; accessible new slider replaces it, not an option deletion. */
+#appScreen #zavi140Size{display:none!important}
+/* Strong contrast even when old CSS turns white text on white card. */
+html[data-zavi-theme="light"] body #appScreen #view{color:#18364f!important}
+html[data-zavi-theme="light"] body #appScreen #view :is(.panel,.card,.settings-card,.store-card,.customer-card,.admin-store-card,.customer-panel,.store-row,.admin-stat,.admin-stat-card,.kpi-card){background:#fff!important;color:#173b55!important;border-color:#b5cedf!important;opacity:1!important}
+html[data-zavi-theme="light"] body #appScreen #view :is(.panel,.card,.settings-card,.store-card,.customer-card,.admin-store-card,.store-row,.admin-stat,.admin-stat-card,.kpi-card) :is(h1,h2,h3,h4,p,span,strong,small,label){color:#203f59!important;-webkit-text-fill-color:currentColor!important;opacity:1!important;text-shadow:none!important}
+html[data-zavi-theme="light"] body #appScreen #view :is(input,select,textarea){background:#fff!important;border-color:#aac3d7!important;color:#143c55!important;-webkit-text-fill-color:#143c55!important;opacity:1!important}
+html[data-zavi-theme="light"] body #appScreen #view :is(button,.btn):not(.primary):not([class*="danger"]):not([class*="warn"]){color:#194460!important;-webkit-text-fill-color:currentColor!important;opacity:1!important}
+html[data-zavi-theme="light"] body #appScreen #view :is(button.primary,.btn.primary,.z423-inline){background:linear-gradient(110deg,#1761c9,#0c9dbd)!important;color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important;text-shadow:none!important}
+/* Existing hero MUST stay navy with white text in light theme. */
+html[data-zavi-theme="light"] body #appScreen #view .admin-hero,
+html[data-zavi-theme="dark"] body #appScreen #view .admin-hero{background:linear-gradient(135deg,#112c5f,#16568c)!important;color:#fff!important;border:1px solid #3578bf!important;isolation:isolate!important;min-height:0!important;max-width:100%!important;overflow:hidden!important;box-shadow:0 8px 20px #072a5030!important}
+html body #appScreen #view .admin-hero :is(h1,h2,h3,h4,p,span,strong,small,.admin-hero-kicker,em){color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important;opacity:1!important}
+html body #appScreen #view .admin-hero:before,html body #appScreen #view .admin-hero:after{display:none!important;content:none!important}
+html[data-zavi-theme="light"] body #appScreen #view .admin-hero :is(.btn,button){background:#185ed1!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border:1px solid #469ad7!important}
+html[data-zavi-theme="light"] body #appScreen #view :is(.pill,.badge,.status,.status-pill){font-weight:850!important;letter-spacing:normal!important;word-break:keep-all!important;white-space:nowrap!important;overflow-wrap:normal!important;max-width:100%!important;display:inline-flex!important;align-items:center!important;width:auto!important;min-width:0!important;min-height:30px!important;padding:5px 8px!important;border:1px solid #a8c8d9!important;border-radius:999px!important;background:#e7f5ff!important;color:#12547c!important;-webkit-text-fill-color:currentColor!important}
+html[data-zavi-theme="dark"] body #appScreen #view :is(.pill,.badge,.status,.status-pill){word-break:keep-all!important;white-space:nowrap!important;letter-spacing:normal!important;overflow-wrap:normal!important;width:auto!important;min-width:0!important;max-width:100%!important;padding:5px 8px!important}
+#appScreen #view table{max-width:100%;border-collapse:separate;border-spacing:0;table-layout:auto;direction:inherit}
+#appScreen #view table :is(th,td){box-sizing:border-box;word-break:normal!important;overflow-wrap:break-word;min-width:0;vertical-align:middle}
+#appScreen #view table td :is(.status,.pill,.badge){word-break:normal!important;white-space:nowrap!important;overflow-wrap:normal!important}
+html[data-zavi-theme="light"] body #appScreen #view table :is(tr,td,th){background:#fff!important;color:#193e56!important;border-color:#cad9e5!important}
+html[data-zavi-theme="light"] body #appScreen #view table tbody tr:nth-child(even) :is(td,th){background:#eef6fc!important;color:#1b3d57!important}
+#appScreen #view :is(.calendar-date,.solar-date,.gregorian-date,.date-pair){white-space:normal!important;word-break:keep-all!important;overflow-wrap:break-word!important;line-height:1.7!important}
+html body #appScreen .sidebar .nav-item{min-height:44px!important;font-size:12px!important;line-height:1.45!important;word-break:normal!important;overflow-wrap:break-word!important}
+html body #appScreen .sidebar .nav{max-width:100%!important;overflow-x:hidden!important}
+@media(max-width:760px){
+ html body #appScreen #view{padding:12px!important;max-width:100%!important}
+ html body #appScreen #view .admin-hero{padding:14px!important;margin:0 0 10px!important;border-radius:13px!important}
+ html body #appScreen #view .admin-hero h1{font-size:20px!important}
+ html body #appScreen #view .admin-hero p{font-size:11px!important}
+ html body #appScreen #view .admin-kpi-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ html body #appScreen #view .admin-kpi-grid>*{min-width:0!important;padding:11px!important}
+ html body #appScreen #view table.z424-responsive-table{display:block!important;max-width:100%!important;width:100%!important;min-width:0!important;border:0!important;background:transparent!important}
+ html body #appScreen #view table.z424-responsive-table thead{display:none!important}
+ html body #appScreen #view table.z424-responsive-table tbody{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important;min-width:0!important}
+ html body #appScreen #view table.z424-responsive-table tbody tr{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:2px!important;padding:9px!important;margin:0!important;width:100%!important;max-width:100%!important;min-width:0!important;border-radius:12px!important;border:1px solid #bad3e3!important;background:var(--za-panel,#fff)!important;overflow:hidden!important}
+ html body #appScreen #view table.z424-responsive-table tbody td{display:grid!important;grid-template-columns:minmax(92px,35%) minmax(0,65%)!important;gap:9px!important;width:100%!important;min-width:0!important;max-width:100%!important;padding:6px 4px!important;margin:0!important;overflow-wrap:break-word!important;border-bottom:1px solid #deebf3!important;white-space:normal!important;line-height:1.6!important;font-size:11.5px!important;align-items:start!important}
+ html body #appScreen #view table.z424-responsive-table tbody td:before{content:attr(data-z424-label);display:block!important;font-size:10.5px!important;font-weight:800!important;line-height:1.5!important;color:#45708f!important;white-space:normal!important;word-break:normal!important}
+ html body #appScreen #view table.z424-responsive-table tbody td:last-child{border-bottom:0!important}
+ html body #appScreen #view table.z424-responsive-table tbody td :is(button,.btn){min-width:0!important;max-width:100%!important;white-space:normal!important;font-size:11px!important;margin:2px!important}
+ html body #appScreen #view table.z424-responsive-table tbody td :is(.pill,.badge,.status){white-space:nowrap!important;word-break:normal!important;max-width:max-content!important}
+}
+@media(max-width:370px){
+ #appScreen .topbar .breadcrumbs{font-size:10px!important}
+ #appScreen .z424-language-button{max-width:76px!important;width:76px!important;font-size:11px!important}
+ html body #appScreen .topbar .zavi-language-switch{max-width:78px!important;width:78px!important;min-width:78px!important}
+}
+@media(prefers-reduced-motion:reduce){.z424-lang-list *{animation:none!important;transition:none!important}}
