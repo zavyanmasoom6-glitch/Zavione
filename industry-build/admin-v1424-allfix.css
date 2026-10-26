@@ -79,3 +79,12 @@ html body #appScreen .sidebar .nav{max-width:100%!important;overflow-x:hidden!im
  html body #appScreen .topbar .zavi-language-switch{max-width:78px!important;width:78px!important;min-width:78px!important}
 }
 @media(prefers-reduced-motion:reduce){.z424-lang-list *{animation:none!important;transition:none!important}}
+/* Keep actions reachable even where the legacy compact header hides originals. */
+html body #appScreen .topbar .top-right #z424-tools{display:inline-flex!important;flex:0 0 34px!important;width:34px!important;min-width:34px!important;max-width:34px!important;height:36px!important;min-height:36px!important;max-height:36px!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;margin:0!important;padding:0!important;border:1px solid #9ab6d3!important;border-radius:10px!important;background:#eaf3fe!important;color:#15466e!important;-webkit-text-fill-color:#15466e!important;font-size:23px!important;line-height:1!important;font-weight:900!important}
+.z424-tools-menu{position:fixed;z-index:214100;display:flex;flex-direction:column;box-sizing:border-box;width:202px;max-width:calc(100vw - 16px);padding:7px;gap:3px;max-height:min(360px,70dvh);overflow:auto;border-radius:12px;border:1px solid #92b5d2;background:#fff;box-shadow:0 12px 30px #081d3540;color:#173a57;direction:inherit}
+.z424-tools-entry{box-sizing:border-box;display:flex;align-items:center;justify-content:flex-start;width:100%;min-height:40px;margin:0;padding:8px 10px;border:1px solid transparent;border-radius:9px;background:transparent;color:#193c59;-webkit-text-fill-color:#193c59;white-space:normal;font:750 12px/1.55 Tahoma,system-ui,sans-serif;text-align:start}
+.z424-tools-entry:hover,.z424-tools-entry:focus-visible{background:#e5f4ff;border-color:#b6d6e9}
+html[data-zavi-theme="dark"] .z424-tools-menu{background:#15324e;color:#f6fbff;border-color:#426c8c}
+html[data-zavi-theme="dark"] .z424-tools-entry{color:#f4faff;-webkit-text-fill-color:#f4faff}
+html[data-zavi-theme="dark"] #appScreen .topbar .top-right #z424-tools{background:#244766!important;color:#f2faff!important;-webkit-text-fill-color:#f2faff!important}
+@media(max-width:400px){html body #appScreen .topbar>.top-right{gap:4px!important}html body #appScreen .topbar .top-right #z424-tools{flex-basis:30px!important;width:30px!important;min-width:30px!important;height:34px!important;min-height:34px!important}}
