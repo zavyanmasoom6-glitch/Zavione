@@ -22,6 +22,9 @@ assert count>=90,count
 for needed in ("index.html","app.js","account-control.js","admin-portal.js",
                "zavi-v6572-admin-trial7.js","zavi-v6570-admin-offline.js","zavi-admin-industry-overview.js"):
  assert (out/needed).is_file(),needed
+# Install the updated ADMIN store-offline dialog; base 1.4.20 APK contains the old 180/365-only implementation.
+shutil.copy2(Path("android-build/patches/zavi-v6570-admin-offline.js"),out/"zavi-v6570-admin-offline.js")
+assert "new Option(w.seven,'7')" in (out/"zavi-v6570-admin-offline.js").read_text()
 for asset in ("admin-v1421-compact.js","admin-v1421-compact.css",
               "admin-v1422-mobile-fix.js","admin-v1422-mobile-fix.css"):
  shutil.copy2(Path("industry-build")/asset,out/("zavi-"+asset))
