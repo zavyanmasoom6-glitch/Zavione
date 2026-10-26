@@ -50,36 +50,87 @@ function modal(){
  footer.append(mk('span','z421-free',t().free));
  const grant=mk('button','z421-grant',t().grant);grant.type='button';grant.disabled=true;footer.append(grant);
  const selected=()=>rows().find(r=>r.workspace_id===select.value);
- function update(){
-  const r=selected();preview.replaceChildren();
-  if(!r){preview.append(mk('p','',t().none));grant.disabled=true;return}
-  preview.append(badgeDate(r.expires_at));
-  if(r.plan==='lifetime'){preview.append(mk('p','z421-warning',t().life));grant.disabled=true;return}
+ const textFor=()=>{
+  const l=lang();
+  return l==='en'?{
+   unsubscribed:'No current subscription yet',loading:'Checking the current expiry on the server…',
+   after:'New expiry if 7 days are granted',estimate:'Estimated from server time; saved only after confirmation',
+   trouble:'Could not load the subscription date. Try again or refresh.',
+   life:'Lifetime access — no expiry date',waiting:'Select a store to see both dates'
+  }:l==='ps'?{
+   unsubscribed:'تر اوسه ګډون نه دی ثبت شوی',loading:'په سرور کې د ختم نېټه کتل کېږي…',
+   after:'د ۷ ورځو له ثبت وروسته د پای نېټه',estimate:'د سرور اټکل؛ له تایید وروسته ثبتېږي',
+   trouble:'د سرور نېټه ترلاسه نه شوه. بيا هڅه وکړئ.',life:'دایمي ګډون — د ختم نېټه نه لري',waiting:'د نېټو لپاره دوکان وټاکئ'
+  }:{
+   unsubscribed:'هنوز اشتراکی برای این فروشگاه ثبت نشده است.',loading:'در حال دریافت تاریخ دقیق از سرور…',
+   after:'تاریخ ختم پیشنهادی پس از تمدید ۷ روزه',estimate:'این تاریخ از سرور محاسبه شده؛ فقط پس از تأیید ثبت می‌شود.',
+   trouble:'تاریخ از سرور دریافت نشد. اتصال را بررسی و دوباره کوشش کنید.',
+   life:'اشتراک دائمی است و تاریخ ختم ندارد.',waiting:'برای دیدن هر دو تاریخ فروشگاه را انتخاب کنید.'
+  };
+ };
+ let previewSeq=0;
+ async function update(){
+  const current=++previewSeq, r=selected();
+  preview.replaceChildren();
+  preview.classList.remove('z427-pending','z427-ready','z427-failed');
+  if(!r){preview.textContent=textFor().waiting;grant.disabled=true;return}
+  if(r.plan==='lifetime'){preview.textContent=textFor().life;grant.disabled=true;return}
+  const fallback=r.expires_at||r.subscription_expires_at||r.subscription?.expires_at||null;
   grant.disabled=!live()||working;
+  preview.classList.add('z427-pending');
+  const dateLabel=mk('div','z427-date-line');
+  dateLabel.append(mk('strong','z427-date-name',t().current),mk('span','z427-date-value',fallback?formatted(fallback):textFor().loading));
+  preview.append(dateLabel);
+  if(!live()){preview.classList.remove('z427-pending');return}
+  try{
+   // Dedicated owner-only, read-only RPC returns the actual DB expiry and
+   // proposed seven-day end. Never rely on stale local list or client clocks.
+   const answer=await window.ZaviAdminAPI.request('/rest/v1/rpc/zavi_admin_preview_trial_7days',{
+    method:'POST',body:{p_workspace_id:r.workspace_id}
+   });
+   if(!overlay.isConnected||current!==previewSeq||select.value!==r.workspace_id)return;
+   const info=Array.isArray(answer)?answer[0]:(answer?.data||answer);
+   if(!info||!('can_extend' in info))throw Error('Incomplete subscription preview');
+   preview.replaceChildren();preview.classList.remove('z427-pending');preview.classList.add('z427-ready');
+   if(info.can_extend===false){preview.append(mk('strong','z427-date-name',textFor().life));grant.disabled=true;return}
+   const actual=info.current_expires_at;
+   const old=mk('div','z427-date-line');
+   old.append(mk('strong','z427-date-name',t().current),mk('span','z427-date-value',actual?formatted(actual):textFor().unsubscribed));
+   const next=mk('div','z427-date-line z427-projected');
+   next.append(mk('strong','z427-date-name',textFor().after),mk('span','z427-date-value',info.proposed_expires_at?formatted(info.proposed_expires_at):textFor().trouble));
+   preview.append(old,next,mk('small','z427-date-hint',textFor().estimate));
+   grant.disabled=!live()||working||!info.proposed_expires_at;
+  }catch(err){
+   if(!overlay.isConnected||current!==previewSeq||select.value!==r.workspace_id)return;
+   preview.classList.remove('z427-pending');preview.classList.add('z427-failed');
+   if(!fallback)dateLabel.lastChild.textContent=textFor().unsubscribed;
+   preview.append(mk('p','z427-date-hint',textFor().trouble));
+   grant.disabled=!live()||working;
+  }
  }
- select.addEventListener('change',update);
+ select.addEventListener('change',()=>{void update()});
  grant.addEventListener('click',async()=>{
-  if(working||!live()){status.textContent=t().locked;return}
+  if(working||!live()){status.className='z421-status z427-error';status.textContent=t().locked;return}
   const r=selected();if(!r){status.textContent=t().select;return}
   if(r.plan==='lifetime'){status.textContent=t().life;return}
   if(!window.confirm(t().yes))return;
-  working=true;grant.disabled=true;status.textContent=t().sending;
+  working=true;grant.disabled=true;status.className='z421-status z427-pending';status.textContent=t().sending;
   try{
    const result=await window.ZaviAdminAPI.request('/rest/v1/rpc/zavi_admin_grant_trial_7days',{
     method:'POST',body:{p_workspace_id:r.workspace_id,p_reason:note.value.trim()||'7-day customer evaluation'}
    });
    if(!overlay.isConnected)return;
    const item=Array.isArray(result)?result[0]:result;
-   status.replaceChildren(mk('strong','',t().done));
+   status.className='z421-status z427-success';status.replaceChildren(mk('strong','',t().done));
    if(item?.expires_at)status.append(mk('div','z421-success-date',t().new+': '+formatted(item.expires_at)));
    note.value='';
    window.dispatchEvent(new CustomEvent('zavi-admin-trial-granted',{detail:{workspace_id:r.workspace_id}}));
-  }catch(err){status.textContent=t().error+(err?.message||String(err))}
-  finally{working=false;update()}
+  }catch(err){status.className='z421-status z427-error';status.textContent=t().error+(err?.message||String(err))}
+  finally{working=false;void update()}
  });
  card.append(header,label,select,preview,noteLabel,note,status,footer);
  overlay.append(card);overlay.addEventListener('click',e=>{if(e.target===overlay)shut()});
- document.body.append(overlay);openPanel=overlay;update();return overlay;
+ document.body.append(overlay);openPanel=overlay;void update();return overlay;
 }
 function shut(){openPanel?.remove();openPanel=null;working=false}
 function open(){
