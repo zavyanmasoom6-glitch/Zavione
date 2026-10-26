@@ -1,0 +1,1 @@
+Installable QA only. This package has separate local storage and a temporary QA signing key. Do NOT uninstall a previous ZAVI ONE app with pending unsynced transactions. The original account owner confirms the business type and grants from central ADMIN.
