@@ -1,0 +1,16 @@
+/* ADMIN V1.4.28 — self-contained seven-day read-only offline mode */
+#appScreen .z428-banner{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:7px 12px!important;margin:9px 0!important;padding:10px 12px!important;border-radius:12px!important;background:#e8f6fd!important;border:1px solid #86b9d9!important;color:#183c57!important;-webkit-text-fill-color:#183c57!important;font:700 13px/1.6 Tahoma,system-ui,sans-serif!important;min-width:0!important;width:100%!important;box-sizing:border-box!important}
+#appScreen .z428-banner strong{flex:1 0 100%!important;color:inherit!important;-webkit-text-fill-color:inherit!important}
+#appScreen .z428-banner small{flex:1 1 160px!important;color:inherit!important;-webkit-text-fill-color:inherit!important}
+#appScreen .z428-refresh{color:#fff!important;-webkit-text-fill-color:#fff!important;background:#1768c8!important;border:0!important;border-radius:9px!important;min-height:36px!important;padding:6px 12px!important;font-weight:850!important;cursor:pointer!important}
+#appScreen .z428-refresh:disabled{opacity:.55!important}
+html[data-zavi-theme="dark"] #appScreen .z428-banner,body[data-theme="dark"] #appScreen .z428-banner{background:#214663!important;color:#e9f9ff!important;-webkit-text-fill-color:#e9f9ff!important;border-color:#5d89ad!important}
+#z428-readonly-overlay{position:fixed!important;inset:0!important;z-index:220000!important;background:#f7fafd!important;color:#1b3a51!important;box-sizing:border-box!important;padding:max(64px,env(safe-area-inset-top)) 18px 20px!important;overflow:auto!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:center!important;gap:13px!important;text-align:center!important;font:700 15px/1.8 Tahoma,system-ui,sans-serif!important}
+#z428-readonly-overlay h2{color:#0c4570!important;font-size:20px!important;line-height:1.5!important;margin:0!important}
+#z428-readonly-overlay p{margin:0!important;line-height:1.8!important}
+#z428-readonly-overlay .z428-counters{padding:16px!important;border-radius:13px!important;background:#e1f2ff!important;border:1px solid #8bbad9!important;word-break:break-word!important}
+#z428-readonly-overlay small{opacity:1!important;color:#375d78!important}
+html[data-zavi-theme="dark"] #z428-readonly-overlay,body[data-theme="dark"] #z428-readonly-overlay{background:#11263e!important;color:#f4faff!important}
+html[data-zavi-theme="dark"] #z428-readonly-overlay h2,body[data-theme="dark"] #z428-readonly-overlay h2{color:#b2e9ff!important}
+html[data-zavi-theme="dark"] #z428-readonly-overlay .z428-counters,body[data-theme="dark"] #z428-readonly-overlay .z428-counters{background:#1f4361!important;border-color:#638ca9!important}
+html[data-zavi-theme="dark"] #z428-readonly-overlay small,body[data-theme="dark"] #z428-readonly-overlay small{color:#d4e8fa!important}
