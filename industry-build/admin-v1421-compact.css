@@ -1,0 +1,73 @@
+/* ZAVI ONE ADMIN v1.4.21. Applied after all legacy presentation styles.
+   Mobile-first layout, no changes to accounting/auth/RLS/business logic. */
+#appScreen{--z421-ink:#19364d;--z421-mute:#486479;--z421-border:#ccd9e4;--z421-primary:#165bbb;--z421-on-primary:#fff}
+#appScreen .topbar{box-sizing:border-box!important;position:relative;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:space-between!important;align-items:center!important;gap:10px!important;min-height:58px!important;height:auto!important;max-height:80px!important;margin:0!important;padding:8px 12px!important;border-radius:0!important;overflow:visible!important;grid-template-columns:none!important;grid-template-rows:none!important;min-width:0!important}
+#appScreen .topbar .top-right{display:flex!important;flex:1 1 auto!important;min-width:0!important;align-items:center!important;gap:8px!important;padding:0!important;margin:0!important;position:static!important}
+#appScreen .topbar .breadcrumbs{display:flex!important;align-items:center!important;flex:0 1 auto!important;min-width:0!important;max-width:100%!important;margin:0!important;font-size:12px!important;line-height:1.4!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;gap:4px!important}
+#appScreen .topbar .breadcrumbs b{font-size:12px!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#appScreen .topbar .top-actions{display:flex!important;flex:0 0 auto!important;width:auto!important;max-width:53%!important;min-width:0!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:flex-end!important;align-items:center!important;gap:6px!important;margin:0!important;padding:0!important;position:static!important;grid-template-columns:none!important;grid-auto-flow:row!important}
+#appScreen .topbar .top-actions>*,#appScreen .topbar .top-right>*{margin-top:0!important;margin-bottom:0!important;align-self:center!important}
+#appScreen .topbar .mobile-menu,#appScreen .topbar .z11-top-theme,#appScreen .topbar .icon-btn{display:inline-flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:center!important;min-width:39px!important;max-width:44px!important;min-height:39px!important;max-height:44px!important;width:40px!important;height:40px!important;padding:5px!important;font-size:19px!important;border-radius:11px!important}
+#appScreen .topbar .zavi-language-switch{display:flex!important;align-items:center!important;flex:0 0 auto!important;gap:2px!important;margin:0!important;min-width:0!important;border-radius:11px!important;padding:4px!important}
+#appScreen .topbar .zavi-language-switch select{box-sizing:border-box!important;max-width:92px!important;min-height:36px!important;height:36px!important;padding:3px 5px!important;font-size:12px!important;font-weight:700!important;text-overflow:ellipsis!important;min-width:0!important}
+#appScreen .topbar .live-status,#appScreen .topbar .avatar,#appScreen .topbar #z73-launch{display:none!important}
+#appScreen .sidebar .nav .z421-nav-entry,#appScreen .sidebar .nav .z421-trial-entry{display:flex!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;min-height:43px!important;max-width:100%!important;margin:2px 0!important;padding:9px 12px!important;border-radius:11px!important;text-align:start!important;white-space:normal!important;font-size:13px!important;font-weight:750!important;line-height:1.5!important;opacity:1!important;-webkit-text-fill-color:currentColor!important;color:inherit!important;box-shadow:none!important}
+#appScreen .sidebar .nav .z421-trial-entry{background:rgba(20,119,194,.09)!important;border:1px solid rgba(34,128,187,.2)!important}
+#appScreen .z421-today{display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:6px 12px!important;box-sizing:border-box!important;margin:8px 10px 9px!important;padding:8px 11px!important;background:rgba(29,119,194,.055)!important;border:1px solid rgba(31,117,184,.13)!important;border-radius:12px!important;color:var(--z421-ink)!important;direction:rtl!important;font:12px/1.55 Tahoma,system-ui,sans-serif!important}
+#appScreen .z421-today strong{color:var(--z421-ink)!important;font-weight:800!important;font-size:12px!important}
+#appScreen .z421-today-label{font-weight:800;color:var(--z421-mute)!important}
+#appScreen .z421-inline-trial{background:linear-gradient(125deg,#1463c5,#0b9bb8)!important;color:#fff!important;-webkit-text-fill-color:#fff!important;padding:10px 14px!important;min-height:43px!important;border:0!important;border-radius:11px!important;font-size:12px!important;font-weight:800!important}
+#appScreen .z421-date-pair{display:inline-block;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-size:12px;line-height:1.75;color:inherit}
+#z70-overlay #z72-trial{display:none!important} /* seven-day grants are available in their own owner-only modal */
+#appScreen :is(button,.btn, .nav-item){font-weight:750}
+#appScreen :is(button,.btn, .nav-item):disabled{opacity:.69!important;color:#35495a!important;-webkit-text-fill-color:#35495a!important;text-shadow:none!important}
+#appScreen :is(button,.btn, .nav-item):not(:disabled){-webkit-text-fill-color:currentColor}
+#appScreen :is(.card,.kpi-card,.stat-card) :is(h2,h3,strong){opacity:1!important;filter:none!important;text-shadow:none!important}
+#appScreen :is(.card,.kpi-card,.stat-card) p,#appScreen :is(.card,.kpi-card,.stat-card) small{opacity:.92!important}
+#appScreen :is(input,select,textarea,button){max-width:100%;box-sizing:border-box;letter-spacing:normal}
+#appScreen :is(.card,.kpi-card,.stat-card){min-width:0;overflow-wrap:break-word}
+#appScreen :is(h1,h2,h3,.page-title){overflow-wrap:break-word;line-height:1.55}
+#appScreen .z73-launch:not(.z421-nav-entry){display:none!important}
+.z421-overlay{position:fixed;inset:0;z-index:210000;display:flex;align-items:center;justify-content:center;padding:15px;box-sizing:border-box;background:rgba(6,23,47,.72);overflow-y:auto;direction:rtl}
+.z421-modal{box-sizing:border-box;width:min(100%,560px);max-height:94dvh;overflow:auto;margin:auto;padding:17px;border:1px solid #c4dbe9;border-radius:17px;background:#fff;color:#173851;box-shadow:0 24px 80px rgba(0,0,0,.27);font:14px/1.7 Tahoma,system-ui,sans-serif}
+.z421-modal *{box-sizing:border-box}
+.z421-modal-header{display:flex;gap:12px;justify-content:space-between;align-items:start;border-bottom:1px solid #e2ecf3;padding:0 0 12px}
+.z421-modal-title{min-width:0}
+.z421-modal h2{font-size:18px;font-weight:900;color:#173851;line-height:1.4;margin:0 0 4px}
+.z421-modal-title small{font-size:12px;color:#435d72;line-height:1.8}
+.z421-close{min-width:39px;min-height:39px;border:1px solid #c7d8e5;background:#edf5fb;color:#224c6c;font-size:20px;border-radius:9px;cursor:pointer}
+.z421-label{display:block;color:#234b66;font-size:12px;font-weight:800;margin:14px 0 6px}
+.z421-select,.z421-note{display:block;width:100%;min-height:46px;border:1px solid #b6cddd;border-radius:10px;background:#fff;color:#183a53;padding:9px 12px;font-size:14px;font-weight:650;outline-offset:2px}
+.z421-preview{min-height:68px;background:#f1f7fb;border:1px solid #d7e7f0;border-radius:11px;padding:11px;margin:12px 0;color:#21435b}
+.z421-preview p{margin:0}
+.z421-preview .z421-dates strong{display:block;font-size:12px;margin-bottom:5px}
+.z421-dual-date{display:block;line-height:1.9;font-size:12.5px;font-weight:650;overflow-wrap:anywhere}
+.z421-status{min-height:32px;white-space:normal;overflow-wrap:anywhere;color:#204662;font-size:12px;margin:13px 0}
+.z421-success-date{margin-top:7px;color:#12563d;font-weight:750}
+.z421-warning{color:#a74b25}
+.z421-footer{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:12px}
+.z421-free{font-size:12px;color:#225a78;font-weight:750}
+.z421-grant{min-height:46px;padding:10px 18px;border:0;border-radius:10px;background:linear-gradient(130deg,#185fd0,#0d9ab6);color:#fff;-webkit-text-fill-color:#fff;font-size:13px;font-weight:850;cursor:pointer}
+.z421-grant:disabled{background:#d7e0e8;color:#34546b;-webkit-text-fill-color:#34546b;cursor:not-allowed;opacity:1}
+html[data-zavi-theme="dark"] .z421-modal,body[data-theme="dark"] .z421-modal{background:#15314c;color:#f5faff;border-color:#406587}
+html[data-zavi-theme="dark"] .z421-modal h2,body[data-theme="dark"] .z421-modal h2{color:#fff}
+html[data-zavi-theme="dark"] .z421-modal-title small,body[data-theme="dark"] .z421-modal-title small{color:#d6e6f4}
+html[data-zavi-theme="dark"] .z421-label,html[data-zavi-theme="dark"] .z421-free{color:#e1f4ff}
+html[data-zavi-theme="dark"] .z421-preview{background:#203e57;border-color:#426881;color:#fff}
+html[data-zavi-theme="dark"] #appScreen .z421-today{background:#193c55!important;color:#e6f3ff!important}
+html[data-zavi-theme="dark"] #appScreen .z421-today strong{color:#f3fbff!important}
+@media(max-width:800px){
+#appScreen .workspace{width:100%!important;min-width:0!important;max-width:100%!important;overflow-x:clip!important}
+#appScreen .topbar{min-height:56px!important;max-height:64px!important;padding:6px 9px!important;gap:7px!important}
+#appScreen .topbar .breadcrumbs{font-size:11px!important}
+#appScreen .topbar .top-actions{max-width:52%!important}
+#appScreen .topbar .top-actions #refreshBtn,#appScreen .topbar .avatar{display:none!important}
+#appScreen .topbar .z11-top-theme{display:none!important} /* available in settings; avoid duplicated theme controls */
+#appScreen .topbar .zavi-language-switch>span{display:none!important}
+#appScreen .topbar .zavi-language-switch select{max-width:78px!important;font-size:11px!important}
+#appScreen .topbar .mobile-menu{min-width:42px!important;width:42px!important;height:42px!important}
+#appScreen .z421-today{margin:6px 8px!important;padding:6px 9px!important;gap:4px 9px!important;font-size:11px!important}
+#appScreen .z421-today strong{font-size:11px!important}
+}
+@media(max-width:380px){#appScreen .topbar .breadcrumbs{font-size:10px!important}#appScreen .topbar .top-actions{max-width:38%!important}#appScreen .topbar .zavi-language-switch select{max-width:58px!important}}
+@media(prefers-reduced-motion:reduce){.z421-overlay *{animation:none!important;transition:none!important}}
