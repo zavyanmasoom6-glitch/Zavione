@@ -132,3 +132,5 @@
 @media(prefers-reduced-motion:reduce){
  html body #appScreen .sidebar{transition:none!important}
 }
+
+/* QA CI invariant: the hidden menu starts off-screen in both RTL and LTR and cannot trap navigation. */
