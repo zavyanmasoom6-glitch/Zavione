@@ -82,11 +82,10 @@ function open(){
    if(result!==true&&!(Array.isArray(result)&&result[0]===true))throw Error('Server did not confirm action');
    message.textContent=mode==='grant'?w.doneGrant:w.doneRevoke;
    confirm.value='';
-   const local=chosen();if(local)local.plan=mode==='grant'?'lifetime':'annual';
    window.dispatchEvent(new CustomEvent('zavi-admin-lifetime-updated',{detail:{workspace_id:r.workspace_id,action:mode}}));
    setTimeout(()=>{try{q('#refreshBtn')?.click()}catch(_){}},300);
   }catch(err){message.textContent=w.err+(err?.message||String(err))}
-  finally{busy=false;reset()}
+  finally{busy=false;act.disabled=true;/* fresh store list required before another write */}
  });
  card.append(header,intro,label(w.choose,picker),details,tabs,form,info,message,tools);overlay.append(card);document.body.append(overlay);panel=overlay;
  overlay.addEventListener('click',e=>{if(e.target===overlay)close()});reset();
