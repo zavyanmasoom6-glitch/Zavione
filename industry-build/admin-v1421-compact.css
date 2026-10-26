@@ -71,3 +71,6 @@ html[data-zavi-theme="dark"] #appScreen .z421-today strong{color:#f3fbff!importa
 }
 @media(max-width:380px){#appScreen .topbar .breadcrumbs{font-size:10px!important}#appScreen .topbar .top-actions{max-width:38%!important}#appScreen .topbar .zavi-language-switch select{max-width:58px!important}}
 @media(prefers-reduced-motion:reduce){.z421-overlay *{animation:none!important;transition:none!important}}
+/* The older dual-calendar plugin places a SECOND date banner inside the header, expanding it vertically. The compact paired date strip replaces that banner. */
+#appScreen .topbar #zaviDateBanner,#appScreen #zaviDateBanner{display:none!important;position:absolute!important;visibility:hidden!important;height:0!important;max-height:0!important;overflow:hidden!important;margin:0!important;padding:0!important;border:0!important}
+#appScreen .topbar .z73-launch:not(.z421-nav-entry){display:none!important}
