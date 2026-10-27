@@ -1,0 +1,134 @@
+/* ZAVI 65.86 — three independent sliders, same navy/cyan design, accessible light/dark */
+html.zavi-design-84{--z86-text-scale:1;--z86-icon-scale:1;--z86-ui-scale:1}
+html.zavi-design-84 #zavi-display-settings-v6545,
+html.zavi-design-84 #appScreen #z424-size-card{
+ width:100%!important;max-width:100%!important;min-width:0!important;
+ padding:clamp(11px,2.5vw,20px)!important;
+ border-radius:17px!important;
+ border:1px solid var(--z84-line)!important;
+ background:var(--z84-card)!important;
+ color:var(--z84-text)!important;
+ box-shadow:var(--z84-shadow)!important;
+ box-sizing:border-box!important;
+ overflow:visible!important;
+}
+html.zavi-design-84 #zavi-display-settings-v6545 :is(.zds-range-line,.zds-ticks,.zds-actions,.zds-help),
+html.zavi-design-84 #appScreen #z424-size-card > :is(#z424-scale-range,.z424-limits,#z424-size-reset,#z424-size-caption){
+ display:none!important
+}
+html.zavi-design-84 #zavi-display-settings-v6545 .zds-head,
+html.zavi-design-84 #appScreen #z424-size-card .z424-size-top{
+ color:var(--z84-text)!important;padding:0!important;margin:0 0 7px!important;
+}
+html.zavi-design-84 #zavi-display-settings-v6545 .zds-title,
+html.zavi-design-84 #appScreen #z424-size-card .z424-size-title,
+html.zavi-design-84 #appScreen #z424-size-card .z424-size-current{
+ color:var(--z84-text)!important;-webkit-text-fill-color:var(--z84-text)!important;
+}
+html.zavi-design-84 #z86-three-sliders{
+ --z86-action:#06bfe5;
+ --z86-surface:var(--z84-soft,var(--z84-card));
+ box-sizing:border-box!important;width:100%!important;max-width:100%!important;min-width:0!important;
+ color:var(--z84-text)!important;background:transparent!important;
+ direction:inherit!important;text-align:start!important;
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:11px!important;
+ font-family:inherit!important;overflow:visible!important;
+}
+html.zavi-design-84 #z86-three-sliders *{box-sizing:border-box}
+html.zavi-design-84 #z86-three-sliders .z86-header{min-width:0}
+html.zavi-design-84 #z86-three-sliders .z86-title{
+ color:var(--z84-text)!important;font-weight:850!important;font-size:clamp(14px,2.3vw,18px)!important;line-height:1.5!important
+}
+html.zavi-design-84 #z86-three-sliders .z86-description,
+html.zavi-design-84 #z86-three-sliders .z86-hint{
+ color:var(--z84-text)!important;opacity:.85!important;
+ font-size:clamp(11px,1.9vw,13px)!important;line-height:1.75!important;margin:3px 0 0!important;
+}
+html.zavi-design-84 #z86-three-sliders .z86-row{
+ box-sizing:border-box!important;min-width:0!important;width:100%!important;
+ padding:12px clamp(10px,2vw,18px)!important;
+ background:var(--z86-surface)!important;
+ border:1px solid var(--z84-line)!important;
+ border-radius:13px!important;
+ display:grid!important;gap:8px!important;
+}
+html.zavi-design-84 #z86-three-sliders .z86-label,
+html.zavi-design-84 #z86-three-sliders .z86-bottom{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ min-width:0!important;gap:7px!important;flex-wrap:wrap!important;
+}
+html.zavi-design-84 #z86-three-sliders .z86-label label{
+ flex:1 1 auto!important;min-width:0!important;color:var(--z84-text)!important;
+ font-size:clamp(13px,2.1vw,17px)!important;font-weight:800!important;line-height:1.65!important;
+}
+html.zavi-design-84 #z86-three-sliders output{
+ direction:ltr!important;unicode-bidi:isolate!important;min-width:55px!important;
+ font-size:18px!important;font-weight:850!important;color:#0aaee2!important;text-align:center!important;
+}
+html.zavi-design-84 #z86-three-sliders input[type=range]{
+ width:100%!important;max-width:100%!important;min-width:0!important;
+ height:36px!important;min-height:36px!important;display:block!important;
+ margin:0!important;padding:0!important;accent-color:#09bfee!important;
+ appearance:auto!important;cursor:pointer!important;
+}
+html.zavi-design-84 #z86-three-sliders .z86-bottom{
+ direction:ltr!important;color:var(--z84-text)!important;
+}
+html.zavi-design-84 #z86-three-sliders .z86-bottom small{
+ color:var(--z84-text)!important;font-size:11px!important;opacity:.85!important;
+}
+html.zavi-design-84 #z86-three-sliders button{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ min-height:36px!important;max-width:100%!important;padding:7px 11px!important;margin:0!important;
+ border-radius:9px!important;border:1px solid var(--z84-line)!important;
+ background:var(--z84-card)!important;color:var(--z84-text)!important;
+ font:750 12px/1.55 inherit!important;white-space:normal!important;
+ cursor:pointer!important;
+}
+html.zavi-design-84 #z86-three-sliders [data-z86-all]{
+ background:linear-gradient(105deg,#1b65ed,#08b7e5)!important;color:white!important;
+ -webkit-text-fill-color:white!important;border:0!important;min-height:43px!important;width:100%!important;
+}
+html.zavi-design-84 #z86-three-sliders button:disabled{opacity:.45!important}
+html.zavi-design-84 #z86-three-sliders :focus-visible{
+ outline:3px solid #1acff0!important;outline-offset:3px!important;
+}
+/* Change text dimensions without shrinking the viewport or scaling fixed-position dialogs */
+html.zavi-design-84 body :is(#content,#appScreen #view) :is(h1,h2,h3,h4,p,label,th,td,small),
+html.zavi-design-84 body :is(#zrf-all,#za67-menu) :is(.zrf-all-name,.za67-label){
+ zoom:var(--z86-text-scale)!important;
+}
+html.zavi-design-84 body :is(#content,#appScreen #view) :is(button,input,select,textarea){
+ font-size:calc(13px * var(--z86-text-scale))!important;
+}
+html.zavi-design-84 #z86-three-sliders,
+html.zavi-design-84 #z86-three-sliders :is(label,small,p,button){zoom:1!important}
+/* Icon slider: affect native icon glyphs, not the entire navigation/card container */
+html.zavi-design-84 body :is(#content,#appScreen #view,#zrf-all,#za67-menu) svg,
+html.zavi-design-84 body .admin-mobile-nav svg{
+ width:clamp(12px,calc(19px * var(--z86-icon-scale)),31px)!important;
+ height:clamp(12px,calc(19px * var(--z86-icon-scale)),31px)!important;
+}
+html.zavi-design-84 body :is(#zrf-all,#za67-menu) :is(.zrf-all-icon,.za67-symbol){
+ width:clamp(25px,calc(35px * var(--z86-icon-scale)),53px)!important;
+ height:clamp(25px,calc(35px * var(--z86-icon-scale)),53px)!important;
+ flex-basis:clamp(25px,calc(35px * var(--z86-icon-scale)),53px)!important;
+ font-size:clamp(12px,calc(18px * var(--z86-icon-scale)),27px)!important;
+}
+html.zavi-design-84 #content :is(.card,.panel,.settings-card){
+ padding:clamp(9px,calc(14px * var(--z86-ui-scale)),21px)!important;
+}
+html.zavi-design-84 #content :is(button,input:not([type="range"]),select,textarea){
+ min-height:clamp(32px,calc(40px * var(--z86-ui-scale)),60px)!important;
+}
+html.zavi-design-84 #z86-three-sliders :is(button,input){
+ min-height:unset!important;
+}
+@media(max-width:550px){
+ html.zavi-design-84 #z86-three-sliders .z86-row{padding:10px!important}
+ html.zavi-design-84 #z86-three-sliders .z86-title{font-size:15px!important}
+}
+@media print{
+ html.zavi-design-84 body :is(#content,#appScreen #view) :is(h1,h2,h3,h4,p,label,th,td,small){zoom:1!important}
+ html.zavi-design-84 #z86-three-sliders{display:none!important}
+}
