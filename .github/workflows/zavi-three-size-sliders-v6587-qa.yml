@@ -1,0 +1,111 @@
+name: ZAVI ONE V65.87 Three Independent Size Controls Android/iPad QA
+on:
+  push:
+    branches: [zavi-v6587-three-size-sliders-store-qa]
+    paths:
+      - '.github/workflows/zavi-three-size-sliders-v6587-qa.yml'
+      - 'design-system/**'
+      - 'windows-build/build-unified-design-v6586.ps1'
+      - 'windows-build/prepare-v6586-desktop.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  android-both:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '17'}
+      - uses: gradle/actions/setup-gradle@v4
+        with: {gradle-version: '8.13'}
+      - name: Install Android tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          M="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$M" ];then M="$(find "$ANDROID_HOME/cmdline-tools" -name sdkmanager -type f | head -1)";fi
+          yes | "$M" --licenses >/dev/null || true
+          "$M" --install 'platforms;android-36' 'build-tools;36.0.0'
+      - name: Obtain original SHA-verified ZAVI ONE 65.83 and owner ADMIN 1.4.29 binaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p design-staging design-delivery
+          cp industry-delivery/ZAVI_ONE_UNIFIED_20_BUSINESSES_V65_83_TRIAL7_REAL_OFFLINE_QA.apk design-staging/one.apk
+          sha256sum design-staging/one.apk
+          echo 'fee4ae8ec59a8d433f95c631fe26dfd46fcb8d4916aca01ed5b3090cf5a4d018  design-staging/one.apk' | sha256sum -c
+          git fetch --no-tags --depth=1 origin zavi-admin-v1429-seven-day-store-offline-qa
+          git show FETCH_HEAD:industry-delivery/ZAVI_ONE_ADMIN_V1_4_29_STORE_OFFLINE_7D_QA.apk > design-staging/admin.apk
+          echo '4d06d6e76f6e7238ea01b4759f617087c195741267f191d89e0a865aff3f1eea  design-staging/admin.apk' | sha256sum -c
+      - name: Package ZAVI ONE design APK and iPad Safari web PWA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 design-system/build_android_v6587.py --app one --apk design-staging/one.apk --expected-sha fee4ae8ec59a8d433f95c631fe26dfd46fcb8d4916aca01ed5b3090cf5a4d018
+          node --check android-build/app/src/main/assets/zavi-unified-v6584.js
+          test -s android-build/app/src/main/assets/zavi-real-viewport-v6586.css
+          test -s android-build/app/src/main/assets/zavi-unified-navigation-v6585.css
+          node --check android-build/app/src/main/assets/annual-license.js
+          node --check android-build/app/src/main/assets/zavi-display-settings-v6545.js
+          test -s android-build/app/src/main/assets/zavi-three-size-sliders-v6587.css
+          python3 - <<'PY3S'
+          from pathlib import Path
+          s=Path('android-build/app/src/main/assets/zavi-display-settings-v6545.js').read_text()
+          css=Path('android-build/app/src/main/assets/zavi-three-size-sliders-v6587.css').read_text()
+          html=Path('android-build/app/src/main/assets/index.html').read_text()
+          assert "['text','system','icons']" in s
+          assert 'min="50" max="150" step="5"' in s
+          assert "'zavi_size_text_v6587'" in s and "'zavi_size_system_v6587'" in s and "'zavi_size_icons_v6587'" in s
+          assert 'fa:{' in s and 'ps:{' in s and 'en:{' in s
+          assert 'zavi-three-size-sliders-v6587.css?v=65.87' in html
+          assert 'zoom:1!important' not in css and 'root.style.zoom' not in s
+          assert all(x in s for x in ['z87-reset-one','z87-reset-all','aria-label'])
+          print('PASS 3 independent sliders, translation keys, accessibility and CSS')
+          PY3S
+          ! grep -Fq 'document.documentElement.style.zoom=String(percent/100)' android-build/app/src/main/assets/zavi-display-settings-v6545.js
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile,json
+          a=Path('android-build/app/src/main/assets')
+          assert len(json.loads((a/'zavi-unified20-manifest.json').read_text())['profiles'])==20
+          assert 'zavi-real-viewport-v6586.css?v=65.87' in (a/'index.html').read_text()
+          assert "['annual','semiannual','trial'].includes(entitlement.plan)" in (a/'annual-license.js').read_text()
+          with zipfile.ZipFile('design-delivery/ZAVI_ONE_V65_87_IPAD_PWA_QA.zip','w',compression=zipfile.ZIP_DEFLATED) as z:
+           for f in a.rglob('*'):
+            if f.is_file():z.write(f,f.relative_to(a).as_posix())
+          PY
+          (cd android-build && gradle --no-daemon -PzaviApp=one :app:assembleRelease)
+          APK=android-build/app/build/outputs/apk/release/app-release.apk
+          test -s "$APK"
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose "$APK" | grep 'Verified using v2 scheme'
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$APK" | grep -F "com.zavione.one.unified20.v6587threeslidersqa"
+          unzip -Z1 "$APK" | grep -Fx assets/zavi-unified-navigation-v6585.css
+          unzip -Z1 "$APK" | grep -Fx assets/zavi-real-viewport-v6586.css
+          unzip -Z1 "$APK" | grep -Fx assets/zavi-three-size-sliders-v6587.css
+          unzip -Z1 "$APK" | grep -Fx assets/zavi-unified-v6584.css
+          unzip -Z1 "$APK" | grep -Fx assets/zavi-unified-v6584.js
+          unzip -Z1 "$APK" | grep -Fx assets/zavi-display-settings-v6545.js
+          unzip -Z1 "$APK" | grep -Fx assets/zavi-real-viewport-v6586.css
+          cp "$APK" design-delivery/ZAVI_ONE_20_BUSINESSES_V65_87_UNIFIED_DESIGN_QA.apk
+          (cd design-delivery && sha256sum ZAVI_ONE_20_BUSINESSES_V65_87_UNIFIED_DESIGN_QA.apk > ZAVI_ONE_20_BUSINESSES_V65_87_UNIFIED_DESIGN_QA.apk.sha256)
+      - name: Publish verified APKs and iPad Safari files
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd design-delivery
+          for file in *_IPAD_PWA_QA.zip;do sha256sum "$file" > "$file.sha256";done
+          cat > README_DARI.txt <<'EOF'
+          ZAVI ONE 65.87 – three separate settings controls for text, full interface and icons.
+          50–150% sliders; system size never changes page zoom, preserving responsive tablet and mobile layouts.
+          The original accounting, 20 trade editions, cloud sync, subscription and server-confirmed offline enforcement remain unchanged.
+          iPads use hosted Safari PWA ZIP; Android APK cannot install on an iPad.
+          QA only: real device verification and a permanent production signing key are required before public distribution.
+          EOF
+          TAG=zavi-three-sliders-v6587-qa-20261027
+          gh release create "$TAG" --target "$GITHUB_SHA" --title "ZAVI ONE V65.87 Independent Size Sliders QA" --notes-file README_DARI.txt --prerelease || gh release view "$TAG" >/dev/null
+          gh release upload "$TAG" ./ZAVI_ONE_20_BUSINESSES_V65_87_UNIFIED_DESIGN_QA.apk ./ZAVI_ONE_20_BUSINESSES_V65_87_UNIFIED_DESIGN_QA.apk.sha256 ./ZAVI_ONE_V65_87_IPAD_PWA_QA.zip ./ZAVI_ONE_V65_87_IPAD_PWA_QA.zip.sha256 --clobber
+          echo "Android published at https://github.com/$GITHUB_REPOSITORY/releases/tag/$TAG"
