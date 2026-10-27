@@ -34,6 +34,13 @@ if a.app=="one":
  new="document.documentElement.style.removeProperty('zoom');\n document.documentElement.style.setProperty('--z86-ui-scale',String(percent/100));"
  assert s.count(old)==1,(str(f),s.count(old))
  f.write_text(s.replace(old,new),encoding="utf-8")
+ # Expand legacy slider's upper bound to 150%; the old implementation capped it at 115%.
+ assert s.count("MAX=115")==1
+ s=s.replace("MAX=115","MAX=150")
+ assert s.count('max="115"')==1
+ s=s.replace('max="115"','max="150"')
+ assert s.count('<span>115%</span>')==1
+ s=s.replace('<span>115%</span>','<span>150%</span>')
  assert "window.ZaviDisplayScale=" in s
  manifest=out/"zavi-unified20-manifest.json"
  m=json.loads(manifest.read_text(encoding="utf-8"));assert len(m["profiles"])==20
