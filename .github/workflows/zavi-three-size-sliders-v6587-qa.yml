@@ -72,7 +72,7 @@ jobs:
           import zipfile,json
           a=Path('android-build/app/src/main/assets')
           assert len(json.loads((a/'zavi-unified20-manifest.json').read_text())['profiles'])==20
-          assert 'zavi-real-viewport-v6586.css?v=65.87' in (a/'index.html').read_text()
+          assert 'zavi-real-viewport-v6586.css?v=65.86' in (a/'index.html').read_text()
           assert "['annual','semiannual','trial'].includes(entitlement.plan)" in (a/'annual-license.js').read_text()
           with zipfile.ZipFile('design-delivery/ZAVI_ONE_V65_87_IPAD_PWA_QA.zip','w',compression=zipfile.ZIP_DEFLATED) as z:
            for f in a.rglob('*'):
