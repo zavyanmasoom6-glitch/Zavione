@@ -56,6 +56,8 @@ jobs:
           node design-system/test_dual_command_v6605.cjs
           node --check design-system/zavi-independent-commands-v6606.js
           node design-system/test_independent_v6606.cjs
+          node --check design-system/zavi-single-launch-v6607.js
+          grep -Fq '#z197-dashboard-mic' design-system/zavi-single-launch-v6607.css
           ! grep -Fq 'sayReply(' design-system/zavi-voice-local-v6599.js
           ! grep -Fq 'new Audio(' design-system/zavi-voice-local-v6599.js
           ! grep -Fq 'z199-privacy' design-system/zavi-voice-local-v6599.js
@@ -93,6 +95,7 @@ jobs:
           python3 design-system/apply_single_launch_v6607.py --app one
           node --check android-build/app/src/main/assets/zavi-single-launch-v6607.js
           grep -Fq 'zavi-single-launch-v6607.js?v=66.07' android-build/app/src/main/assets/index.html
+          grep -Fq 'window.__zaviSingle607=true;' android-build/app/src/main/assets/index.html
           node --check android-build/app/src/main/assets/zavi-independent-commands-v6606.js
           grep -Fq 'zavi-independent-commands-v6606.js?v=66.07' android-build/app/src/main/assets/index.html
           grep -Fq 'zavi-independent-commands-v6606.css?v=66.07' android-build/app/src/main/assets/index.html
@@ -343,6 +346,7 @@ jobs:
           python3 design-system/apply_single_launch_v6607.py --app admin
           node --check android-build/app/src/main/assets/zavi-single-launch-v6607.js
           grep -Fq 'zavi-single-launch-v6607.js?v=66.07' android-build/app/src/main/assets/index.html
+          grep -Fq 'window.__zaviSingle607=true;' android-build/app/src/main/assets/index.html
           node --check android-build/app/src/main/assets/zavi-independent-commands-v6606.js
           grep -Fq 'zavi-independent-commands-v6606.js?v=66.07' android-build/app/src/main/assets/index.html
           grep -Fq 'zavi-independent-commands-v6606.css?v=66.07' android-build/app/src/main/assets/index.html
