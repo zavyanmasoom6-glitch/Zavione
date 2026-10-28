@@ -26,10 +26,10 @@ const sections=ADMIN?{
  health:['وضعیت سیستم','سلامت سیستم','health'],
  brand:['برند','brand'],
  security:['امنیت','security'],
- settings:['تنظیمات','تنظیم','تنزیمات','تظیمات','تنظیمونه','امستنې','setting','settings']
+ settings:['تنظیمات','تنظیم','تنزیمات','تظیمات','تنظیمات سیستم','بخش تنظیمات','تنظیمونه','امستنې','setting','settings']
 }:{
  dashboard:['داشبورد','خانه','صفحه اصلی','کور','home','dashboard'],
- sales:['فروش','فروشی','فروخت','فروشات','پلور','خرڅلاو','sale','sales','selling'],
+ sales:['فروش','فروشی','فروخت','فروشات','فروش ها','صفحه فروش','پلور','خرڅلاو','sale','sales','selling'],
  purchases:['خرید','خریداری','پیرود','پېرود','پېرودنې','purchase','purchases','buy'],
  products:['گدام','ګدام','گدوم','گدامداری','انبار','موجودی','کالاها','اجناس','توکي','stock','inventory','products','warehouse'],
  contacts:['مشتری','مشتریان','پېرودونکي','مشتری ها','customers','contacts'],
@@ -55,7 +55,7 @@ function parseCommand(raw){
  if(!n||n.length>280)return {kind:'unknown',reason:'empty'};
  if(DANGEROUS.test(n))return {kind:'refuse',reason:'unsafe'};
  const removeWake=n.replace(/^(?:ای|هی|های|hey|ok|okay)?\s*(?:زاوی|زاوي|زاوی وان|زاوي وان|zavi one|zavi|zavy)[\s،,]*/iu,'').trim();
- const n2=removeWake||n;
+ const n2=(removeWake||n).replace(/\b(?:لطفا|لطفاً|مهربانی|مهرباني|please|برام|برایم|واسه من|همین حالا|حالا|همین|برو|برو به|میشه|میشود|میشه که)\b/gu,' ').replace(/\s+/g,' ').trim();
  let matches=[];
  for(const x of commands){
   for(const a of x.aliases){
