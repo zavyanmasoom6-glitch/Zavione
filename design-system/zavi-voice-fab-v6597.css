@@ -1,0 +1,82 @@
+/* ZAVI VOICE PRO: circular always-discoverable launcher independent of hidden nav.
+   Light mode: pure white and high-contrast navy. Dark: deep navy with cyan accent.
+   No page zoom or changes to ZAVI ONE original forms/menu styles.
+ */
+#z196-launch.z197-dashboard-fab{
+ all:unset!important;
+ -webkit-tap-highlight-color:transparent!important;
+ box-sizing:border-box!important;
+ position:fixed!important;
+ right:clamp(12px,3vw,20px)!important;
+ left:auto!important;
+ bottom:calc(17px + env(safe-area-inset-bottom,0px))!important;
+ z-index:2147482200!important;
+ display:grid!important;
+ place-items:center!important;
+ width:48px!important;
+ height:48px!important;
+ min-width:48px!important;
+ min-height:48px!important;
+ max-width:48px!important;
+ max-height:48px!important;
+ padding:0!important;
+ margin:0!important;
+ border:1px solid #c5d6e8!important;
+ border-radius:999px!important;
+ background:#ffffff!important;
+ color:#125b91!important;
+ box-shadow:0 5px 20px rgba(21,70,114,.23),0 0 0 1px rgba(255,255,255,.7)!important;
+ cursor:pointer!important;
+ line-height:1!important;
+ flex:none!important;
+ transform:none!important;
+ opacity:1!important;
+ visibility:visible!important;
+ text-align:center!important;
+ isolation:isolate!important;
+}
+#z196-launch.z197-dashboard-fab[hidden]{display:none!important}
+#z196-launch.z197-dashboard-fab[data-z197-panel-open="true"]{visibility:hidden!important;pointer-events:none!important}
+#z196-launch.z197-dashboard-fab svg{
+ display:block!important;width:23px!important;height:23px!important;
+ stroke:currentColor!important;fill:none!important;
+ pointer-events:none!important;opacity:1!important;
+}
+#z196-launch.z197-dashboard-fab:focus-visible{
+ outline:3px solid #168bbf!important;outline-offset:4px!important
+}
+#z196-launch.z197-dashboard-fab:active{filter:brightness(.95)!important}
+html[data-zavi-theme="dark"] #z196-launch.z197-dashboard-fab,
+html[data-theme="dark"] #z196-launch.z197-dashboard-fab,
+body[data-theme="dark"] #z196-launch.z197-dashboard-fab,
+body.dark #z196-launch.z197-dashboard-fab{
+ background:#132e4d!important;
+ color:#9deaff!important;
+ border:1px solid #4c7195!important;
+ box-shadow:0 5px 18px rgba(0,0,0,.47),0 0 0 1px rgba(85,168,210,.13)!important
+}
+@media(max-width:700px){
+ #z196-launch.z197-dashboard-fab{
+  width:46px!important;height:46px!important;
+  min-width:46px!important;min-height:46px!important;
+  max-width:46px!important;max-height:46px!important;
+  right:14px!important;bottom:calc(18px + env(safe-area-inset-bottom,0px))!important
+ }
+ #z196-voice:not([hidden]){
+  display:flex!important;align-items:flex-end!important;justify-content:center!important;
+  padding:0!important
+ }
+ #z196-voice:not([hidden]) .z196-modal{
+  width:100%!important;
+  max-width:none!important;
+  max-height:min(84dvh,750px)!important;
+  border-radius:22px 22px 0 0!important;
+  border-bottom:0!important;
+  margin:0!important;
+  padding:clamp(13px,3vw,19px)!important;
+  -webkit-overflow-scrolling:touch!important
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ #z196-launch.z197-dashboard-fab{animation:none!important;transition:none!important}
+}
