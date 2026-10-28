@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$tag = 'zavi-v6597-admin1443-visible-voice-fab-qa-20261028'
+$tag = 'zavi-v6597-admin1443-voice-dashboard-qa-20261028'
 New-Item -ItemType Directory -Path desktop-source,design-windows-delivery -Force | Out-Null
 gh release download $tag --pattern '*.apk*' --dir desktop-source
 if ($LASTEXITCODE -ne 0) { throw 'Cannot obtain release APKs for matching desktop skin' }
