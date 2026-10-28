@@ -109,18 +109,18 @@ function route(raw){
  return {kind:'unknown',source:raw};
 }
 function visible(n){if(!n?.isConnected||n.disabled||n.closest('[hidden],[aria-hidden="true"]'))return false;const r=n.getBoundingClientRect();return r.width>0&&r.height>0}
-function allowedSection(n){return n?.matches?.('button[data-page],a[data-page],.nav-btn,.nav-item,[role="tab"],button[onclick*="goPage"],a[href^="#"]')&&!n.closest('#z196-voice,#z141-center,#z139-dialog')}
+function allowedSection(n){return n?.matches?.('button[data-page],a[data-page],.nav-btn,.nav-item,[role="tab"],button[onclick*="goPage"],a[href^="#"],#sidebarLinks [data-go],#mobileBottom [data-go],nav [data-go]')&&!n.closest('#z196-voice,#z141-center,#z139-dialog')}
 function matchingNavLabel(label){
- const expected=clean(label).replace(/^بخش\s+|^صفحه\s+/,''),menu=[...document.querySelectorAll('button[data-page],a[data-page],.nav-btn,.nav-item,[role="tab"],button[onclick*="goPage"],a[href^="#"]')];
+ const expected=clean(label).replace(/^بخش\s+|^صفحه\s+/,''),menu=[...document.querySelectorAll('button[data-page],a[data-page],.nav-btn,.nav-item,[role="tab"],button[onclick*="goPage"],a[href^="#"],#sidebarLinks [data-go],#mobileBottom [data-go],nav [data-go]')];
  return menu.find(n=>visible(n)&&allowedSection(n)&&[
-  n.textContent,n.getAttribute('aria-label'),n.getAttribute('title'),n.getAttribute('data-page')
+  n.textContent,n.getAttribute('aria-label'),n.getAttribute('title'),n.getAttribute('data-page'),n.getAttribute('data-go')
  ].some(x=>{const title=clean(x||'');return title===expected||title.startsWith(expected+' ')||expected.startsWith(title+' ')&&title.length>=3}))||null
 }
 function matchingNav(key){
- const options=[...document.querySelectorAll('button[data-page],a[data-page],.nav-btn,.nav-item,[role="tab"],button[onclick*="goPage"],a[href^="#"]')].filter(x=>visible(x)&&allowedSection(x));
+ const options=[...document.querySelectorAll('button[data-page],a[data-page],.nav-btn,.nav-item,[role="tab"],button[onclick*="goPage"],a[href^="#"],#sidebarLinks [data-go],#mobileBottom [data-go],nav [data-go]')].filter(x=>visible(x)&&allowedSection(x));
  const aliases=pageText[key].map(clean);
  for(const item of options){
-  const title=clean([item.textContent,item.getAttribute('data-page'),item.getAttribute('aria-label'),item.getAttribute('title')].filter(Boolean).join(' '));
+  const title=clean([item.textContent,item.getAttribute('data-page'),item.getAttribute('data-go'),item.getAttribute('aria-label'),item.getAttribute('title')].filter(Boolean).join(' '));
   if(aliases.some(x=>title===x||title.includes(x)&&x.length>=4))return item
  }
  return null
