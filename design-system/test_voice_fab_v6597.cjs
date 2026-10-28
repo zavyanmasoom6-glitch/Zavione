@@ -17,7 +17,7 @@ const launcher={
  setAttribute(n,v){this[n]=v}
 };
 const dom={
- readyState:'loading',body,
+ readyState:'loading',body,documentElement:{lang:'fa'},
  addEventListener(name,fn){if(name==='DOMContentLoaded')ready=fn},
  getElementById(id){return id==='z196-launch'?launcher:null},
  querySelector(s){if(s==='#appScreen')return app;if(s==='#z196-voice')return {hidden:true};return null}
