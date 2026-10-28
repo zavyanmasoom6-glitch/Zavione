@@ -1,0 +1,7 @@
+/* ZAVI ONE V66.07 mobile command launcher polish: one entry, no duplicate floating controls. */
+#z605-launch{position:fixed!important;inset:auto 18px 82px auto!important;z-index:1100!important;width:52px!important;height:52px!important;border-radius:17px!important;box-shadow:0 8px 22px #07182c66!important}
+#z605-panel{z-index:1500!important;max-height:calc(100dvh - 32px)!important;overflow:auto!important}
+#z605-panel .z606-section{min-width:0!important}
+#z605-panel textarea{font-family:inherit!important;direction:rtl!important}
+@media(max-width:500px){#z605-launch{inset:auto 14px 78px auto!important;width:46px!important;height:46px!important}#z605-panel .z605-shell{max-height:calc(100dvh - 28px)!important;overflow:auto!important}}
+@media(prefers-reduced-motion:reduce){#z605-panel *,#z605-launch{animation:none!important;transition:none!important}}
