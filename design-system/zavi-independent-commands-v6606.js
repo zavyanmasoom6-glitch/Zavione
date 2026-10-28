@@ -125,9 +125,9 @@ function startVoice(){
 }
 function showStatus(text,source='text'){state.status=text;if(source==='voice')state.voiceStatus=text;else state.textStatus=text;render()}
 function execute(raw,source='text'){
- if(!existingSession()){showStatus(w().cloud);return {kind:'blocked'}}
+ if(!existingSession()){showStatus(w().cloud,source);return {kind:'blocked'}}
  const text=String(raw||'').trim().slice(0,300);
- if(!text){showStatus(w().unknown);return {kind:'unknown'}}
+ if(!text){showStatus(w().unknown,source);return {kind:'unknown'}}
  if(source==='voice'){
   if(!state.enabled)return {kind:'blocked'};
   const now=Date.now(),fingerprint=norm(text);
@@ -136,21 +136,21 @@ function execute(raw,source='text'){
  }
  if(source==='voice')state.heard=text;
  const result=parseCommand(text);
- if(result.kind==='refuse'){state.pending=null;showStatus(w().forbidden);return result}
- if(result.kind==='draft'){state.pending=result;showStatus(w().draft);return result}
+ if(result.kind==='refuse'){state.pending=null;showStatus(w().forbidden,source);return result}
+ if(result.kind==='draft'){state.pending=result;showStatus(w().draft,source);return result}
  if(result.kind==='navigate'){
   const dest=findNavigation(result.key);
-  if(!dest){state.pending=null;showStatus(w().noTarget);return {kind:'unavailable',key:result.key}}
+  if(!dest){state.pending=null;showStatus(w().noTarget,source);return {kind:'unavailable',key:result.key}}
   state.pending=null;
   // A native click is the same navigation route that the signed-in user uses.
   // No direct DB, billing, RLS or form submission calls.
   dest.click();
   if(panel)panel.hidden=true;
   if(source==='voice')stopVoice();
-  showStatus(w().sent);
+  showStatus(w().sent,source);
   return result;
  }
- state.pending=null;showStatus(w().unknown);return result;
+ state.pending=null;showStatus(w().unknown,source);return result;
 }
 function create(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e}
 function build(){
@@ -186,7 +186,7 @@ function render(){
  $('#z605-voice-area',panel).hidden=false;
  $('#z605-text-area',panel).hidden=false;
  $('#z605-speech-status',panel).textContent=state.enabled?(state.voiceStatus||q.listening):q.ready;
- const heard=$('#z605-heard',panel);heard.hidden=state.tab!=='voice'||!state.heard;
+ const heard=$('#z605-heard',panel);heard.hidden=!state.heard;
  $('#z605-transcript',panel).textContent=state.heard;
  $('#z605-feedback',panel).textContent=state.textStatus||'';
  const p=$('#z605-draft',panel);p.replaceChildren();p.hidden=!state.pending;
