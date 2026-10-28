@@ -27,3 +27,17 @@ if sw.exists():
  if 'const CORE=[' in s:s=s.replace('const CORE=[','const CORE=["zavi-redesign-v6607.css",',1)
  sw.write_text(s,encoding='utf-8')
 print('PASS responsive single assistant launcher staged; login and cloud unchanged')
+
+# Distinct QA package IDs for the rebuilt APKs, avoiding overwrite of customer apps.
+gradle=Path('android-build/app/build.gradle')
+g=gradle.read_text(encoding='utf-8')
+if 'com.zavione.one.unified20.v6606qa' in g:
+ g=g.replace('com.zavione.one.unified20.v6606qa','com.zavione.one.unified20.v6607qa')
+ g=g.replace('versionCode admin ? 4127 : 660600','versionCode admin ? 4127 : 660700')
+ g=g.replace('66.06-independent-command-qa','66.07-mobile-redesign-qa')
+elif 'com.zavione.one.admin.v1452qa' in g:
+ g=g.replace('com.zavione.one.admin.v1452qa','com.zavione.one.admin.v1453qa')
+ g=g.replace('versionCode admin ? 145200 : 6554','versionCode admin ? 145300 : 6554')
+ g=g.replace('1.4.52-independent-command-qa','1.4.53-mobile-redesign-qa')
+else: raise RuntimeError('Unknown base package: refusing to relabel')
+gradle.write_text(g,encoding='utf-8')
