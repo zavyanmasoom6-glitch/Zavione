@@ -237,7 +237,15 @@ function attach(){
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel&&!panel.hidden)close()});
  document.addEventListener('visibilitychange',()=>{if(document.hidden){close()}});
  window.addEventListener('pagehide',stopVoice);
- const updateLauncher=()=>{if(launcher)launcher.hidden=!existingSession()};
+ const updateLauncher=()=>{
+  const signed=existingSession();
+  if(launcher)launcher.hidden=!signed;
+  // Keep legacy launchers functional through the capture handler, but do not show
+  // overlapping star/microphone buttons in the mobile bottom navigation.
+  for(const node of document.querySelectorAll('#z197-dashboard-mic,#z196-launch,#z198-power,.z196-launch,.z197-fab,#z199-launch')){
+   if(node!==launcher){node.style.setProperty('display','none','important');node.setAttribute('aria-hidden','true');node.tabIndex=-1;}
+  }
+ };
  updateLauncher();
  // Existing accounting SPA replaces DOM nodes, but assistant launcher is fixed and
  // its visibility must track the actual login/workspace, not a stale local flag.
